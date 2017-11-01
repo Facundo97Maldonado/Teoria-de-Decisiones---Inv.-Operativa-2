@@ -9,5 +9,3 @@ Trabajo Practico Final - Investigacion Operativa 2 - TSSI - UTN Mar del Plata
 El trabajo consiste en la realizacion de un sistema que ayude 
 a determinar y gestionar la toma de decisiones correspondientes 
 para cualquier caso que se presente.
-
-#aca estoy viendo a ver si puedo hacer push
