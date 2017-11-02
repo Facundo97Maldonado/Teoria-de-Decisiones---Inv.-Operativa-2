@@ -14530,7 +14530,11 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "app" },
-    [_c("fd-navbar"), _vm._v(" "), _c("router-view")],
+    [
+      _c("fd-navbar"),
+      _vm._v(" "),
+      _c("router-view", { attrs: { situations: _vm.situations } })
+    ],
     1
   )
 }
@@ -14882,7 +14886,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -14911,6 +14915,15 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 exports.default = {
 	name: 'fdSituations',
@@ -14919,11 +14932,7 @@ exports.default = {
 		return {};
 	},
 
-	methods: {
-		getSituations: function getSituations() {
-			this.$emit('getSituations');
-		}
-	}
+	methods: {}
 };
 
 /***/ }),
@@ -14937,16 +14946,48 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c(
-          "ul",
-          _vm._l(_vm.situations, function(sit) {
-            return _c("li", [
-              _vm._v("\n\t\t\t\t\t" + _vm._s(sit) + "\n\t\t\t\t")
-            ])
-          })
-        )
-      ])
+      _c(
+        "div",
+        { staticClass: "col-md-12" },
+        _vm._l(_vm.situations, function(sit, i) {
+          return _c(
+            "table",
+            [
+              _c(
+                "tr",
+                [
+                  _c("th"),
+                  _vm._v(" "),
+                  _vm._v('"\n\t\t\t\t\t'),
+                  _vm._l(_vm.situations[i].alternatives, function(alt) {
+                    return _c("th", [
+                      _vm._v("\n\t\t\t\t\t\t" + _vm._s(alt) + "\n\t\t\t\t\t")
+                    ])
+                  })
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _vm._l(_vm.situations[i].scenarios, function(scen, y) {
+                return _c(
+                  "tr",
+                  [
+                    _c("td", [
+                      _vm._v("\n\t\t\t\t\t\t" + _vm._s(scen) + "\n\t\t\t\t\t")
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.situations[i].alternatives, function(alt, x) {
+                      return _c("td")
+                    })
+                  ],
+                  2
+                )
+              })
+            ],
+            2
+          )
+        })
+      )
     ])
   ])
 }
@@ -15165,12 +15206,13 @@ Object.defineProperty(exports, "__esModule", {
 
 exports.default = {
 	name: 'fdAdd',
+	props: ['situations'],
 	data: function data() {
 		return {
 			alternative: '',
 			alternatives: [],
-			escenario: '',
-			escenarios: []
+			scenario: '',
+			scenarios: []
 		};
 	},
 
@@ -15178,18 +15220,32 @@ exports.default = {
 		noAlternative: function noAlternative() {
 			return this.alternative;
 		},
-		noEscenario: function noEscenario() {
-			return this.escenario;
+		noScenario: function noScenario() {
+			return this.scenario;
+		},
+		noNothing: function noNothing() {
+			return this.alternatives.length && this.scenarios.length;
 		}
 	},
 	methods: {
+		clearAll: function clearAll() {
+			this.alternative = '';
+			this.alternatives = [];
+			this.scenario = '';
+			this.scenarios = [];
+		},
 		addAlternative: function addAlternative(alternative) {
 			this.alternatives.push(alternative);
 			this.alternative = '';
 		},
-		addEscenario: function addEscenario(escenario) {
-			this.escenarios.push(escenario);
-			this.escenario = '';
+		addscenario: function addscenario(scenario) {
+			this.scenarios.push(scenario);
+			this.scenario = '';
+		},
+		addSituation: function addSituation() {
+			this.situations.push({ alternatives: this.alternatives, scenarios: this.scenarios });
+			this.clearAll();
+			console.log(this.situations);
 		}
 	}
 };
@@ -15290,19 +15346,19 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.escenario,
-                  expression: "escenario"
+                  value: _vm.scenario,
+                  expression: "scenario"
                 }
               ],
               staticClass: "form-control",
               attrs: { type: "text", placeholder: "Lluvia torrencial.." },
-              domProps: { value: _vm.escenario },
+              domProps: { value: _vm.scenario },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.escenario = $event.target.value
+                  _vm.scenario = $event.target.value
                 }
               }
             }),
@@ -15311,10 +15367,10 @@ var render = function() {
               "a",
               {
                 staticClass: "btn btn-outline-warning submitBtn",
-                attrs: { disabled: !_vm.noEscenario },
+                attrs: { disabled: !_vm.noScenario },
                 on: {
                   click: function($event) {
-                    _vm.addEscenario(_vm.escenario)
+                    _vm.addscenario(_vm.scenario)
                   }
                 }
               },
@@ -15327,7 +15383,7 @@ var render = function() {
           _c("div", { staticClass: "col-md-12" }, [
             _c("h6", [_vm._v("Escenarios agregados agregadas:")]),
             _vm._v(" "),
-            !_vm.escenarios.length
+            !_vm.scenarios.length
               ? _c("p", { staticClass: "noContent" }, [
                   _vm._v(
                     "\n\t\t\t\t\t\tNo has agregado escenarios aun\n\t\t\t\t\t"
@@ -15337,10 +15393,10 @@ var render = function() {
             _vm._v(" "),
             _c(
               "ul",
-              _vm._l(_vm.escenarios, function(escenario) {
+              _vm._l(_vm.scenarios, function(scenario) {
                 return _c("li", [
                   _vm._v(
-                    "\n\t\t\t\t\t\t\t" + _vm._s(escenario) + "\n\t\t\t\t\t\t"
+                    "\n\t\t\t\t\t\t\t" + _vm._s(scenario) + "\n\t\t\t\t\t\t"
                   )
                 ])
               })
@@ -15352,7 +15408,61 @@ var render = function() {
     _vm._v(" "),
     _vm._m(1),
     _vm._v(" "),
-    _vm._m(2)
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "exampleModal",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "exampleModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _vm._v(
+                  "\n\t\t        \tEstas seguro de agregar esta situacion?\n\t\t      \t"
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v("\n\t\t        \t\tCancelar\n\t\t        \t")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button", "data-dismiss": "modal" },
+                    on: {
+                      click: function($event) {
+                        _vm.addSituation()
+                      }
+                    }
+                  },
+                  [_vm._v("Si, estoy seguro")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -15393,79 +15503,26 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "modal fade",
-        attrs: {
-          id: "exampleModal",
-          tabindex: "-1",
-          role: "dialog",
-          "aria-labelledby": "exampleModalLabel",
-          "aria-hidden": "true"
-        }
-      },
-      [
-        _c(
-          "div",
-          { staticClass: "modal-dialog", attrs: { role: "document" } },
-          [
-            _c("div", { staticClass: "modal-content" }, [
-              _c("div", { staticClass: "modal-header" }, [
-                _c(
-                  "h5",
-                  {
-                    staticClass: "modal-title",
-                    attrs: { id: "exampleModalLabel" }
-                  },
-                  [_vm._v("Confirmar Accion")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "close",
-                    attrs: {
-                      type: "button",
-                      "data-dismiss": "modal",
-                      "aria-label": "Close"
-                    }
-                  },
-                  [
-                    _c("span", { attrs: { "aria-hidden": "true" } }, [
-                      _vm._v("×")
-                    ])
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-body" }, [
-                _vm._v(
-                  "\n\t\t        \tEstas seguro de agregar esta situacion?\n\t\t      \t"
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-footer" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-secondary",
-                    attrs: { type: "button", "data-dismiss": "modal" }
-                  },
-                  [_vm._v("\n\t\t        \t\tCancelar\n\t\t        \t")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  { staticClass: "btn btn-primary", attrs: { type: "button" } },
-                  [_vm._v("Si, estoy seguro")]
-                )
-              ])
-            ])
-          ]
-        )
-      ]
-    )
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Confirmar Accion")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
   }
 ]
 render._withStripped = true
