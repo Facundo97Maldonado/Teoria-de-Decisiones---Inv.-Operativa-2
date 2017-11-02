@@ -36,9 +36,9 @@
 				<div class="row">
 					<div class="col-md-12">
 						<h4 class="subtitle">Agrega los escenarios:</h4>
-						<input  v-model="escenario" type="text" class="form-control" 
+						<input  v-model="scenario" type="text" class="form-control" 
 							placeholder="Lluvia torrencial..">
-						<button :disabled="!noEscenario" @click="addEscenario(escenario)"
+						<button :disabled="!noScenario" @click="addScenario(scenario)"
 							class="btn btn-outline-warning submitBtn">
 							Agregar escenario
 						</button>
@@ -47,12 +47,12 @@
 				<div class="row">
 					<div class="col-md-12">
 						<h6>Escenarios agregados agregadas:</h6>
-						<p class="noContent" v-if="!escenarios.length">
+						<p class="noContent" v-if="!scenarios.length">
 							No has agregado escenarios aun
 						</p>
 						<ul>
-							<li v-for="escenario in escenarios">
-								{{ escenario }}
+							<li v-for="scenario in scenarios">
+								{{ scenario }}
 							</li>
 						</ul>
 					</div>
@@ -84,7 +84,7 @@
 			        	<button type="button" class="btn btn-secondary" data-dismiss="modal">
 			        		Cancelar
 			        	</button>
-			        	<button type="button" class="btn btn-primary">Si, estoy seguro</button>
+			        	<button type="button" class="btn btn-primary" data-dismiss="modal" @click="addSituation()">Si, estoy seguro</button>
 			      	</div>
 			    </div>
 		  	</div>
@@ -93,32 +93,51 @@
 </template>
 
 <script>
+	import situationService from '../services/situationService.js';
+
 	export default {
 		name: 'fdAdd',
+		props:['situations'],
 		data() {
 			return {
 				alternative: '',
 				alternatives: [],
-				escenario: '',
-				escenarios: []
+				scenario: '',
+				scenarios: []
 			}
 		},
 		computed: {
 			noAlternative() {
 				return this.alternative;
 			},
-			noEscenario() {
-				return this.escenario;
+			noScenario() {
+				return this.scenario;
+			},
+			noNothing() {
+				return this.alternatives.length && this.scenarios.length;
 			}
 		},
 		methods: {
+			clearAll(){
+				this.alternative = '';
+				this.alternatives = [];
+				this.scenario = '';
+				this.scenarios = [];
+			},
 			addAlternative(alternative) {
 				this.alternatives.push(alternative);
 				this.alternative = '';
 			},
-			addEscenario(escenario) {
-				this.escenarios.push(escenario);
-				this.escenario = '';
+			addScenario(scenario) {
+				this.scenarios.push(scenario);
+				this.scenario = '';
+			},
+			addSituation(){
+				situationService.addSituation(this.alternatives, this.scenarios);
+				//Hay que guardar en situations situationService.getSituations(); 
+				//Pero si hago this.situations = a lo de arriba tira error, revisar
+				console.log(this.situations);
+				this.clearAll();
 			}
 		}
 	}
