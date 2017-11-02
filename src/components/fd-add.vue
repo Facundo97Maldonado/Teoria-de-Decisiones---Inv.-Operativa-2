@@ -38,7 +38,7 @@
 						<h4 class="subtitle">Agrega los escenarios:</h4>
 						<input  v-model="scenario" type="text" class="form-control" 
 							placeholder="Lluvia torrencial..">
-						<button :disabled="!noEscenario" @click="addEscenario(escenario)"
+						<button :disabled="!noScenario" @click="addScenario(scenario)"
 							class="btn btn-outline-warning submitBtn">
 							Agregar escenario
 						</button>
@@ -93,6 +93,8 @@
 </template>
 
 <script>
+	import situationService from '../services/situationService.js';
+
 	export default {
 		name: 'fdAdd',
 		props:['situations'],
@@ -126,12 +128,15 @@
 				this.alternatives.push(alternative);
 				this.alternative = '';
 			},
-			addscenario(scenario) {
+			addScenario(scenario) {
 				this.scenarios.push(scenario);
 				this.scenario = '';
 			},
 			addSituation(){
-				this.situations.push({alternatives: this.alternatives, scenarios: this.scenarios});
+				situationService.addSituation(this.alternatives, this.scenarios);
+				//Hay que guardar en situations situationService.getSituations(); 
+				//Pero si hago this.situations = a lo de arriba tira error, revisar
+				console.log(this.situations);
 				this.clearAll();
 			}
 		}
