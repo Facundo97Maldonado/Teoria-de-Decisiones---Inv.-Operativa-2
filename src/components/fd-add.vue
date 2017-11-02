@@ -38,10 +38,10 @@
 						<h4 class="subtitle">Agrega los escenarios:</h4>
 						<input  v-model="scenario" type="text" class="form-control" 
 							placeholder="Lluvia torrencial..">
-						<a :disabled="!noScenario" @click="addscenario(scenario)"
+						<button :disabled="!noEscenario" @click="addEscenario(escenario)"
 							class="btn btn-outline-warning submitBtn">
 							Agregar escenario
-						</a>
+						</button>
 					</div>
 				</div>
 				<div class="row">
@@ -61,8 +61,8 @@
 		</div>
 		<div class="row almostAdd">
 			<div class="col-md-6 offset-3">
-				<button type="button" class="btn btn-primary btn-block" data-toggle="modal" 
-					data-target="#exampleModal">
+				<button type="button" class="btn btn-primary btn-block" 
+					data-toggle="modal"data-target="#exampleModal">
 					Agregar situacion
 				</button>
 			</div>
@@ -133,7 +133,6 @@
 			addSituation(){
 				this.situations.push({alternatives: this.alternatives, scenarios: this.scenarios});
 				this.clearAll();
-				console.log(this.situations);
 			}
 		}
 	}
@@ -153,6 +152,7 @@
 	.submitBtn {
 		margin-top: 30px;
 		margin-bottom: 30px;
+		cursor: pointer;
 	}
 	.noContent {
 		margin-top: 15px;

@@ -14436,7 +14436,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -14451,7 +14451,6 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-//
 //
 //
 //
@@ -14483,27 +14482,13 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "nav",
-      { staticClass: "navbar navbar-expand-lg navbar-light bg-light" },
+      { staticClass: "navbar navbar-expand-lg navbar-dark bg-primary" },
       [
-        _c("a", { staticClass: "navbar-brand", attrs: { href: "#" } }, [
-          _vm._v("Teoria de Decisiones")
-        ]),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "navbar-toggler",
-            attrs: {
-              type: "button",
-              "data-toggle": "collapse",
-              "data-target": "#navbarSupportedContent",
-              "aria-controls": "navbarSupportedContent",
-              "aria-expanded": "false",
-              "aria-label": "Toggle navigation"
-            }
-          },
-          [_c("span", { staticClass: "navbar-toggler-icon" })]
-        )
+        _c("div", { staticClass: "container" }, [
+          _c("a", { staticClass: "navbar-brand", attrs: { href: "#" } }, [
+            _vm._v("Teoria de Decisiones")
+          ])
+        ])
       ]
     )
   }
@@ -15094,7 +15079,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "\n.title {\n\tmargin-top: 55px;\n\ttext-align: center;\n}\n.subtitle {\n\tmargin-top: 15px;\n}\n.addFeatures {\n\tmargin-top: 50px;\n}\n.submitBtn {\n\tmargin-top: 30px;\n\tmargin-bottom: 30px;\n}\n.noContent {\n\tmargin-top: 15px;\n\ttext-align: center;\n}\n.almostAdd {\n\tmargin-top: 30px;\n}\n", ""]);
+exports.push([module.i, "\n.title {\n\tmargin-top: 55px;\n\ttext-align: center;\n}\n.subtitle {\n\tmargin-top: 15px;\n}\n.addFeatures {\n\tmargin-top: 50px;\n}\n.submitBtn {\n\tmargin-top: 30px;\n\tmargin-bottom: 30px;\n\tcursor: pointer;\n}\n.noContent {\n\tmargin-top: 15px;\n\ttext-align: center;\n}\n.almostAdd {\n\tmargin-top: 30px;\n}\n#resultado {\n  width: 100%;\n  border: gray solid 1px;\n}\n#resultado td {\n  border: gray solid 1px;\n  padding: 0;\n}\n", ""]);
 
 // exports
 
@@ -15109,6 +15094,7 @@ exports.push([module.i, "\n.title {\n\tmargin-top: 55px;\n\ttext-align: center;\
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
+//
 //
 //
 //
@@ -15238,6 +15224,7 @@ exports.default = {
 			this.alternatives.push(alternative);
 			this.alternative = '';
 		},
+<<<<<<< HEAD
 		addscenario: function addscenario(scenario) {
 			this.scenarios.push(scenario);
 			this.scenario = '';
@@ -15246,6 +15233,72 @@ exports.default = {
 			this.situations.push({ alternatives: this.alternatives, scenarios: this.scenarios });
 			this.clearAll();
 			console.log(this.situations);
+		},
+		generateTable: function generateTable() {
+			var tabla = $('#resultado').append('<thead><tr></tr></thead>');
+			// insertar un header
+			var header = tabla.find('tr');
+			// agregar cabecera vacia
+			header.append('<th></th>');
+			// agregar el body de la tabla
+			tabla.append('<tbody></tbody>');
+			var tbody = tabla.find('tbody');
+
+			// tus datos
+			var data = {
+				"dataval": [{
+					"date": "2014-01-01 00:00:00",
+					"value": 25776510,
+					"name": "Nom1"
+				}, {
+					"date": "2014-02-01 00:00:00",
+					"value": 789,
+					"name": "Nom1"
+				}, {
+					"date": "2014-01-01 00:00:00",
+					"value": 0,
+					"name": "Nom2"
+				}, {
+					"date": "2014-02-01 00:00:00",
+					"value": 0,
+					"name": "Nom2"
+				}]
+			};
+
+			// primero tienes que agupar todos los datos
+			// se agrupa primero por nombre y luego por fecha
+			var datosTabla = data.dataval.reduce(function (curr, item) {
+				// si nos encontramos un item que no ha sido guardado creamos un objeto vacío
+				if (!curr[item.name]) {
+					curr[item.name] = {};
+				}
+				// creamos una propiedad con el valor de "date" para usarla al imprimir las cabeceras y le asignamos el valor correspondiente
+				curr[item.name][item.date] = item.value;
+				return curr;
+			}, {});
+
+			// esta variable sirve para imprimir los headers y hacer más eficiente el programa
+			// básicamente los headers se imprimen en la primera iteración así que no imprimimos más si ya fueron creados
+			var headers = false;
+
+			foreach(datosTabla, function (key, item) {
+				// creamos una nueva fila en el cuerpo de la tabla y la seleccionamos
+				var row = tbody.append('<tr></tr>').last();
+				// le agregamos una columna con el valor de "name"
+				row.append('<td>' + key + '</td>');
+				// iteramos por todas los "dates" o columnas
+				foreach(item, function (keyRow, itemRow) {
+					// si no se han creados los headers los creamos en esta iteración
+					if (!headers) {
+						header.append('<td>' + keyRow + '</td>');
+					}
+					// agregamos cada elemento de la columna
+					row.append('<td>' + itemRow + '</td>');
+				});
+
+				// indicamos que ya no es necesario volver a imprimir los headers
+				headers = true;
+			});
 		}
 	}
 };
@@ -15364,7 +15417,7 @@ var render = function() {
             }),
             _vm._v(" "),
             _c(
-              "a",
+              "button",
               {
                 staticClass: "btn btn-outline-warning submitBtn",
                 attrs: { disabled: !_vm.noScenario },
@@ -15430,8 +15483,9 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _vm._v(
-                  "\n\t\t        \tEstas seguro de agregar esta situacion?\n\t\t      \t"
-                )
+                  "\n\t\t        \tEstas seguro de agregar esta situacion?\n\t\t        \t"
+                ),
+                _c("table", { attrs: { id: "resultado" } })
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "modal-footer" }, [
@@ -15448,12 +15502,16 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-primary",
+<<<<<<< HEAD
                     attrs: { type: "button", "data-dismiss": "modal" },
                     on: {
                       click: function($event) {
                         _vm.addSituation()
                       }
                     }
+=======
+                    attrs: { type: "button", contenteditable: "" }
+>>>>>>> b4a815c76688e024321654bb0ea601eea6937315
                   },
                   [_vm._v("Si, estoy seguro")]
                 )
