@@ -36,15 +36,20 @@
 </template>
 
 <script>
+	import situationService from '../services/situationService.js';
+
 	export default {
 		name: 'fdSituations',
-		props: ['situations'],
 		data() {
 			return {
+				situations: []
 			}
 		},
 		methods: {
 			
+		},
+		created(){
+			this.situations = situationService.getSituations();
 		}
 	}
 </script>

@@ -97,13 +97,13 @@
 
 	export default {
 		name: 'fdAdd',
-		props:['situations'],
 		data() {
 			return {
 				alternative: '',
 				alternatives: [],
 				scenario: '',
-				scenarios: []
+				scenarios: [],
+				situations: []
 			}
 		},
 		computed: {
@@ -133,9 +133,8 @@
 				this.scenario = '';
 			},
 			addSituation(){
+				this.situations = situationService.getSituations();
 				situationService.addSituation(this.alternatives, this.scenarios);
-				//Hay que guardar en situations situationService.getSituations(); 
-				//Pero si hago this.situations = a lo de arriba tira error, revisar
 				console.log(this.situations);
 				this.clearAll();
 			}

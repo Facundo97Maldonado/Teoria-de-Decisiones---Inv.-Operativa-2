@@ -12,11 +12,6 @@
         name: 'app',
         components: {
             fdNavbar
-        },
-        data() {
-            return {
-                situations: []
-            }
         }
     }
 </script>
