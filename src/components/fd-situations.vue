@@ -30,7 +30,8 @@
 									<td scope="row">
 										{{scen}}
 									</td>
-									<td v-for="(alt,x) in situations[i].alternatives" contenteditable> 
+									<td v-for="(alt,x) in situations[i].alternatives"> 
+										<input type="number" name=""  v-model="whatthehellisthis[x][y]">
 										<!-- EMPTY INPUTS HERE --> 
 									</td>
 								</tr>
@@ -134,7 +135,8 @@
 		data() {
 			return {
 				situations: [],
-				alphaAssign: false
+				alphaAssign: false,
+				whatthehellisthis: []
 			}
 		},
 		methods: {
@@ -152,10 +154,16 @@
 			},
 			calculateBySavage() {
 
+			},
+			Create2DArray(rows) {
+			for (let i=0;i<rows;i++) {
+			     this.whatthehellisthis[i] = [];
+			  }
 			}
 		},
 		created(){
 			this.situations = situationService.getSituations();
+			this.Create2DArray(this.situations[0].scenarios.length);
 		}
 	}
 </script>

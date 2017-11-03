@@ -15019,7 +15019,8 @@ exports.default = {
 	data: function data() {
 		return {
 			situations: [],
-			alphaAssign: false
+			alphaAssign: false,
+			whatthehellisthis: []
 		};
 	},
 
@@ -15028,12 +15029,19 @@ exports.default = {
 		calculateByPesimist: function calculateByPesimist() {},
 		calculateByHurwicz: function calculateByHurwicz() {},
 		calculateByLaplace: function calculateByLaplace() {},
-		calculateBySavage: function calculateBySavage() {}
+		calculateBySavage: function calculateBySavage() {},
+		Create2DArray: function Create2DArray(rows) {
+			for (var i = 0; i < rows; i++) {
+				this.whatthehellisthis[i] = [];
+			}
+		}
 	},
 	created: function created() {
 		this.situations = _situationService2.default.getSituations();
+		this.Create2DArray(this.situations[0].scenarios.length);
 	}
 }; //
+//
 //
 //
 //
@@ -15234,9 +15242,34 @@ var render = function() {
                                 alt,
                                 x
                               ) {
-                                return _c("td", {
-                                  attrs: { contenteditable: "" }
-                                })
+                                return _c("td", [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.whatthehellisthis[x][y],
+                                        expression: "whatthehellisthis[x][y]"
+                                      }
+                                    ],
+                                    attrs: { type: "number", name: "" },
+                                    domProps: {
+                                      value: _vm.whatthehellisthis[x][y]
+                                    },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.whatthehellisthis[x],
+                                          y,
+                                          $event.target.value
+                                        )
+                                      }
+                                    }
+                                  })
+                                ])
                               })
                             ],
                             2
