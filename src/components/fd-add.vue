@@ -135,7 +135,6 @@
 			addSituation(){
 				this.situations = situationService.getSituations();
 				situationService.addSituation(this.alternatives, this.scenarios);
-				console.log(this.situations);
 				this.clearAll();
 			}
 		}

@@ -14452,7 +14452,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "\n.situation {\n\tmargin-left: 650px;\n}\n.initTitle {\n\tcolor: #d9d9d9 !important;\n}\n.initTitle:hover{\n\tcolor: white !important;\n}\n", ""]);
+exports.push([module.i, "\n.toggler-btn {\n\tmargin-left: 335px;\n}\n.initTitle {\n\tcolor: #d9d9d9 !important;\n}\n.initTitle:hover{\n\tcolor: white !important;\n}\n", ""]);
 
 // exports
 
@@ -14467,6 +14467,18 @@ exports.push([module.i, "\n.situation {\n\tmargin-left: 650px;\n}\n.initTitle {\
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -14517,49 +14529,87 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "collapse navbar-collapse",
-              attrs: { id: "navbarSupportedContent" }
-            },
-            [
-              _c("ul", { staticClass: "navbar-nav mr-auto" }, [
-                _c(
-                  "li",
-                  { staticClass: "nav-item" },
-                  [
-                    _c("router-link", { attrs: { to: "/situations" } }, [
-                      _c("a", { staticClass: "nav-link situation initTitle" }, [
-                        _vm._v("Situaciones")
+          _vm._m(0),
+          _vm._v(" "),
+          _c("form", { staticClass: "form-inline" }, [
+            _c(
+              "div",
+              {
+                staticClass: "collapse navbar-collapse",
+                attrs: { id: "navbarTogglerDemo02" }
+              },
+              [
+                _c("ul", { staticClass: "navbar-nav mr-auto" }, [
+                  _c(
+                    "li",
+                    { staticClass: "nav-item" },
+                    [
+                      _c("router-link", { attrs: { to: "/about" } }, [
+                        _c("a", { staticClass: "nav-link initTitle" }, [
+                          _vm._v("Instrucciones")
+                        ])
                       ])
-                    ])
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "li",
-                  { staticClass: "nav-item" },
-                  [
-                    _c("router-link", { attrs: { to: "/about" } }, [
-                      _c("a", { staticClass: "nav-link initTitle" }, [
-                        _vm._v("Instrucciones")
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "li",
+                    { staticClass: "nav-item" },
+                    [
+                      _c("router-link", { attrs: { to: "/situations" } }, [
+                        _c("a", { staticClass: "nav-link initTitle" }, [
+                          _vm._v("Situaciones")
+                        ])
                       ])
-                    ])
-                  ],
-                  1
-                )
-              ])
-            ]
-          )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "li",
+                    { staticClass: "nav-item" },
+                    [
+                      _c("router-link", { attrs: { to: "/add" } }, [
+                        _c("a", { staticClass: "nav-link initTitle" }, [
+                          _vm._v("Agregar")
+                        ])
+                      ])
+                    ],
+                    1
+                  )
+                ])
+              ]
+            )
+          ])
         ],
         1
       )
     ]
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "navbar-toggler toggler-btn",
+        attrs: {
+          type: "button",
+          "data-toggle": "collapse",
+          "data-target": "#navbarTogglerDemo02",
+          "aria-controls": "navbarTogglerDemo02",
+          "aria-expanded": "false",
+          "aria-label": "Toggle navigation"
+        }
+      },
+      [_c("span", { staticClass: "navbar-toggler-icon" })]
+    )
+  }
+]
 render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
@@ -14942,7 +14992,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "\n.trow {\n\tpadding-left: -300px;\n}\n.noSituations {\n\ttext-align: center;\n\tmargin-top: 200px;\n}\n", ""]);
+exports.push([module.i, "\n.trow {\n\tpadding-left: -300px;\n}\n.situationsTitle {\n\tmargin-top: 50px;\n\ttext-align: center;\n\tmargin-bottom: 25px;\n}\n.noSituations {\n\ttext-align: center;\n\tmargin-top: 200px;\n}\n.tableRow {\n\tmargin-top: 50px;\n}\n.options {\n\ttext-align: center;\n\tmargin-bottom: 30px;\n}\n.selectAnOption {\n\tmargin-bottom: 50px;\n}\n.forHurwicz {\n\tmargin-top: -45px;\n}\n.btnAssignAlpha {\n\tmargin-top: 10px;\n\tmargin-left: 30px;\n}\n", ""]);
 
 // exports
 
@@ -14968,15 +15018,113 @@ exports.default = {
 	name: 'fdSituations',
 	data: function data() {
 		return {
-			situations: []
+			situations: [],
+			alphaAssign: false
 		};
 	},
 
-	methods: {},
+	methods: {
+		calculateByOptimist: function calculateByOptimist() {},
+		calculateByPesimist: function calculateByPesimist() {},
+		calculateByHurwicz: function calculateByHurwicz() {},
+		calculateByLaplace: function calculateByLaplace() {},
+		calculateBySavage: function calculateBySavage() {}
+	},
 	created: function created() {
 		this.situations = _situationService2.default.getSituations();
 	}
 }; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -15023,90 +15171,254 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-10 offset-1" }, [
-        _c("div", { staticClass: "row" }, [
-          _c(
-            "div",
-            { staticClass: "col-md-12" },
-            [
-              !_vm.situations.length
-                ? _c("h2", { staticClass: "noSituations" }, [
-                    _vm._v("\n\t\t\t\t\t\tNo posee situaciones aun\n\t\t\t\t\t")
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm._l(_vm.situations, function(sit, i) {
-                return _c("table", { staticClass: "table" }, [
-                  _c(
-                    "thead",
-                    [
-                      _c(
-                        "tr",
-                        { staticClass: "trow" },
-                        [
-                          _vm._m(0, true),
-                          _vm._v(" "),
-                          _vm._l(_vm.situations[i].alternatives, function(alt) {
-                            return _c("th", { attrs: { scope: "col" } }, [
-                              _vm._v(
-                                "\n\t\t\t\t\t\t\t\t\t" +
-                                  _vm._s(alt) +
-                                  "\n\t\t\t\t\t\t\t\t"
-                              )
-                            ])
-                          })
-                        ],
-                        2
-                      ),
-                      _vm._v(" "),
-                      _vm._l(_vm.situations[i].scenarios, function(scen, y) {
-                        return _c(
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _vm.situations.length
+        ? _c("div", { staticClass: "row" }, [_vm._m(0)])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm._l(_vm.situations, function(sit, i) {
+        return _c("div", { staticClass: "row tableRow" }, [
+          _c("div", { staticClass: "col-md-10 offset-1" }, [
+            !_vm.situations.length
+              ? _c("h2", { staticClass: "noSituations" }, [
+                  _vm._v("\n\t\t\t\tNo posee situaciones aun\n\t\t\t")
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-12" }, [
+                _c(
+                  "table",
+                  { staticClass: "table table-bordered table-responsive" },
+                  [
+                    _c(
+                      "thead",
+                      [
+                        _c(
                           "tr",
+                          { staticClass: "trow" },
                           [
-                            _c("td", { attrs: { scope: "row" } }, [
-                              _vm._v(
-                                "\n\t\t\t\t\t\t\t\t\t" +
-                                  _vm._s(scen) +
-                                  "\n\t\t\t\t\t\t\t\t"
-                              )
-                            ]),
+                            _vm._m(1, true),
                             _vm._v(" "),
                             _vm._l(_vm.situations[i].alternatives, function(
-                              alt,
-                              x
+                              alt
                             ) {
-                              return _c("td", {
-                                attrs: { contenteditable: "" }
-                              })
+                              return _c("th", { attrs: { scope: "col" } }, [
+                                _vm._v(
+                                  "\n\t\t\t\t\t\t\t\t\t" +
+                                    _vm._s(alt) +
+                                    "\n\t\t\t\t\t\t\t\t"
+                                )
+                              ])
                             })
                           ],
                           2
-                        )
-                      })
-                    ],
-                    2
-                  )
+                        ),
+                        _vm._v(" "),
+                        _vm._l(_vm.situations[i].scenarios, function(scen, y) {
+                          return _c(
+                            "tr",
+                            [
+                              _c("td", { attrs: { scope: "row" } }, [
+                                _vm._v(
+                                  "\n\t\t\t\t\t\t\t\t\t" +
+                                    _vm._s(scen) +
+                                    "\n\t\t\t\t\t\t\t\t"
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _vm._l(_vm.situations[i].alternatives, function(
+                                alt,
+                                x
+                              ) {
+                                return _c("td", {
+                                  attrs: { contenteditable: "" }
+                                })
+                              })
+                            ],
+                            2
+                          )
+                        })
+                      ],
+                      2
+                    )
+                  ]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(2, true),
+            _vm._v(" "),
+            _c("div", { staticClass: "row selectAnOption" }, [
+              _c("div", { staticClass: "col-md-2 offset-1" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success btn-lg btn-block",
+                        on: {
+                          click: function($event) {
+                            _vm.calculateByOptimist()
+                          }
+                        }
+                      },
+                      [_vm._v("\n\t\t\t\t\t\t\t\tOptimista\n\t\t\t\t\t\t\t")]
+                    )
+                  ])
                 ])
-              })
-            ],
-            2
-          )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-2" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger btn-lg btn-block",
+                        on: { click: _vm.calculateByPesimist }
+                      },
+                      [_vm._v("\n\t\t\t\t\t\t\t\tPesimista\n\t\t\t\t\t\t\t")]
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-2" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-warning btn-lg btn-block",
+                        attrs: {
+                          onclick:
+                            "document.getElementById('forHurwicz').style.display='block';"
+                        },
+                        on: { click: _vm.calculateByHurwicz }
+                      },
+                      [_vm._v("\n\t\t\t\t\t\t\t\tHurwicz\n\t\t\t\t\t\t\t")]
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-2" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-info btn-lg btn-block",
+                        on: { click: _vm.calculateByLaplace }
+                      },
+                      [_vm._v("\n\t\t\t\t\t\t\t\tLaplace\n\t\t\t\t\t\t\t")]
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-2" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary btn-lg btn-block",
+                        on: { click: _vm.calculateBySavage }
+                      },
+                      [_vm._v("\n\t\t\t\t\t\t\t\tSavage\n\t\t\t\t\t\t\t")]
+                    )
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.alphaAssign == true,
+                    expression: "alphaAssign == true"
+                  }
+                ],
+                staticClass: "row forHurwicz",
+                attrs: { id: "forHurwicz" }
+              },
+              [_vm._m(3, true)]
+            )
+          ])
         ])
-      ])
-    ])
-  ])
+      })
+    ],
+    2
+  )
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12" }, [
+      _c("h3", { staticClass: "situationsTitle" }, [
+        _vm._v("\n\t\t\t\tSituaciones creadas\n\t\t\t")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("th", { attrs: { scope: "col" } }, [
-      _c("img", {
-        attrs: { width: "", src: "/images/tableSeparator.jpg", alt: "" }
-      })
+      _c("img", { attrs: { width: "", src: "/images/tableSeparator.jpg" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("h4", { staticClass: "options" }, [
+          _vm._v(
+            "\n\t\t\t\t\t\tSelecciona tu postura para tomar una decision\n\t\t\t\t\t"
+          )
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-2 offset-5" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("h6", { staticStyle: { "text-align": "center" } }, [
+            _vm._v("Ingresa el "),
+            _c("strong", [_vm._v("α")]),
+            _vm._v(": ")
+          ]),
+          _vm._v(" "),
+          _c("input", { staticClass: "form-control", attrs: { type: "text" } }),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-warning btn-sm btnAssignAlpha",
+              staticStyle: {},
+              attrs: { onclick: "this.parentElement.style.display='none';" }
+            },
+            [_vm._v("\n\t\t\t\t\t\t\t\tAceptar\n\t\t\t\t\t\t\t")]
+          )
+        ])
+      ])
     ])
   }
 ]
@@ -15275,7 +15587,6 @@ exports.default = {
 		addSituation: function addSituation() {
 			this.situations = _situationService2.default.getSituations();
 			_situationService2.default.addSituation(this.alternatives, this.scenarios);
-			console.log(this.situations);
 			this.clearAll();
 		}
 	}
