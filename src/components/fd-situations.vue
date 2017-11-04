@@ -12,116 +12,40 @@
 				<h2 class="noSituations" v-if="!situations.length">
 					No posee situaciones aun
 				</h2>
-				<!-- TABLE GENERATED -->
-				<div class="row">
-					<div class="col-md-12">
-						<table class="table table-bordered table-responsive">
-							<thead>
-								<tr class="trow">
-									<th scope="col">
-										<!-- EMPTY CORNER IMAGE -->
-										<img width="" src="/images/tableSeparator.jpg" >
-									</th> 
-									<th scope="col" v-for="alt in situations[i].alternatives">
-										{{alt}}
-									</th>
-								</tr>
-								<tr v-for="(scen,y) in situations[i].scenarios">
-									<td scope="row">
-										{{scen}}
-									</td>
-									<td v-for="(alt,x) in situations[i].alternatives"> 
-										<input type="number" name=""  v-model="whatthehellisthis[x][y]">
-										<!-- EMPTY INPUTS HERE --> 
-									</td>
-								</tr>
-							</thead>
-						</table>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12">
-						<h4 class="options">
-							Selecciona tu postura para tomar una decision
-						</h4>
-					</div>
-				</div>
-				<!-- OPTIONS SECTION -->
-				<div class="row selectAnOption">
-					<!-- OPTIMIST -->
-					<div class="col-md-2 offset-1">
+				<div class="row showFeatures">
+					<div class="col-md-5">
 						<div class="row">
 							<div class="col-md-12">
-								<button @click="calculateByOptimist()" 
-									class="btn btn-success btn-lg btn-block">
-									Optimista
-								</button>
+								<h3 class="tittle">{{sit.tittle}}</h3>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<h6>Alternativas:</h6>
+								<ul>
+									<li v-for="alternative in sit.alternatives">
+										{{ alternative }}
+									</li>
+								</ul>
 							</div>
 						</div>
 					</div>
-					<!-- PESIMIST -->
-					<div class="col-md-2">
+					<div class="col-md-5 offset-2">
 						<div class="row">
 							<div class="col-md-12">
-								<button @click="calculateByPesimist" 
-									class="btn btn-danger btn-lg btn-block">
-									Pesimista
-								</button>
-							</div>
-						</div>
-					</div>
-					<!-- HURWICZ -->
-					<div class="col-md-2">
-						<div class="row">
-							<div class="col-md-12">
-								<button 
-									onclick="document.getElementById('forHurwicz').style.display='block';"
-									@click="calculateByHurwicz"
-									class="btn btn-warning btn-lg btn-block">
-									Hurwicz
-								</button>
-							</div>
-						</div>
-					</div>
-					<!-- LAPLACE -->
-					<div class="col-md-2">
-						<div class="row">
-							<div class="col-md-12">
-								<button @click="calculateByLaplace"
-									class="btn btn-info btn-lg btn-block">
-									Laplace
-								</button>
-							</div>
-						</div>
-					</div>
-					<!-- SAVAGE -->
-					<div class="col-md-2">
-						<div class="row">
-							<div class="col-md-12">
-								<button @click="calculateBySavage"
-									class="btn btn-primary btn-lg btn-block">
-									Savage
-								</button>
+								<h6>Escenarios:</h6>
+								<ul>
+									<li v-for="scenario in sit.scenarios">
+										{{ scenario }}
+									</li>
+								</ul>
 							</div>
 						</div>
 					</div>
 				</div>
-				<!-- FOR HURWICZ -->
-				<div class="row forHurwicz" id="forHurwicz" v-show="alphaAssign == true">
-					<div class="col-md-2 offset-5">
-						<div class="row">
-							<div class="col-md-12">
-								<h6 style="text-align: center;">Ingresa el <strong>α</strong>: </h6>
-								<input type="text" class="form-control">
-								<button onclick="this.parentElement.style.display='none';"
-									style="center-align" 
-									class="btn btn-warning btn-sm btnAssignAlpha">
-									Aceptar
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
+				<router-link :to="{name: 'oneSituation', params: {id: sit.id}}">
+                            <p>Ir a la situacion</p>
+                </router-link>
 			</div>
 		</div>
 	</div>
@@ -134,36 +58,11 @@
 		name: 'fdSituations',
 		data() {
 			return {
-				situations: [],
-				alphaAssign: false,
-				whatthehellisthis: []
-			}
-		},
-		methods: {
-			calculateByOptimist() {
-
-			},
-			calculateByPesimist() {
-
-			},
-			calculateByHurwicz() {
-
-			},
-			calculateByLaplace() {
-
-			},
-			calculateBySavage() {
-
-			},
-			Create2DArray(rows) {
-			for (let i=0;i<rows;i++) {
-			     this.whatthehellisthis[i] = [];
-			  }
+				situations: []
 			}
 		},
 		created(){
 			this.situations = situationService.getSituations();
-			this.Create2DArray(this.situations[0].scenarios.length);
 		}
 	}
 </script>

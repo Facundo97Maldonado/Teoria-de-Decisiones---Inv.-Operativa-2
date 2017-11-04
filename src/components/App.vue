@@ -1,7 +1,7 @@
 <template>
     <div class="app">
     	<fd-navbar></fd-navbar>
-        <router-view :situations="situations"></router-view>
+        <router-view></router-view>
     </div>
 </template>
 

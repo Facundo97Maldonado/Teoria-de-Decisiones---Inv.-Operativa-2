@@ -667,6 +667,39 @@ process.umask = function() { return 0; };
 
 /***/ }),
 /* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.default = {
+	getSituations: function getSituations() {
+		return JSON.parse(localStorage.getItem('situations')) || [];
+	},
+	addSituation: function addSituation(arr_alternatives, arr_scenarios, tit) {
+		var situations = this.getSituations();
+		situations.push({ alternatives: arr_alternatives, scenarios: arr_scenarios, tittle: tit, id: this.getLastId() + 1 });
+		localStorage.setItem('situations', JSON.stringify(situations));
+	},
+	getLastId: function getLastId() {
+		var situations = JSON.parse(localStorage.getItem('situations') || '[]');
+		if (!situations.length) {
+			return 0;
+		}
+		return situations[situations.length - 1].id;
+	},
+	getSituationById: function getSituationById(id) {
+		return JSON.parse(localStorage.getItem('situations')).find(function (s) {
+			return s.id == id;
+		});
+	}
+};
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports) {
 
 var g;
@@ -693,7 +726,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3325,27 +3358,6 @@ if (inBrowser && window.Vue) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
 
 /***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-exports.default = {
-	getSituations: function getSituations() {
-		return JSON.parse(localStorage.getItem('situations')) || [];
-	},
-	addSituation: function addSituation(arr_alternatives, arr_scenarios) {
-		var situations = this.getSituations();
-		situations.push({ alternatives: arr_alternatives, scenarios: arr_scenarios });
-		localStorage.setItem('situations', JSON.stringify(situations));
-	}
-};
-
-/***/ }),
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3356,7 +3368,7 @@ var _vue = __webpack_require__(8);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _vueRouter = __webpack_require__(5);
+var _vueRouter = __webpack_require__(6);
 
 var _vueRouter2 = _interopRequireDefault(_vueRouter);
 
@@ -13946,7 +13958,7 @@ Vue$3.compile = compileToFunctions;
 
 /* harmony default export */ __webpack_exports__["default"] = (Vue$3);
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3), __webpack_require__(4), __webpack_require__(9).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3), __webpack_require__(5), __webpack_require__(9).setImmediate))
 
 /***/ }),
 /* 9 */
@@ -14198,7 +14210,7 @@ exports.clearImmediate = clearImmediate;
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(3)))
 
 /***/ }),
 /* 11 */
@@ -14632,11 +14644,7 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "app" },
-    [
-      _c("fd-navbar"),
-      _vm._v(" "),
-      _c("router-view", { attrs: { situations: _vm.situations } })
-    ],
+    [_c("fd-navbar"), _vm._v(" "), _c("router-view")],
     1
   )
 }
@@ -14662,7 +14670,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _vueRouter = __webpack_require__(5);
+var _vueRouter = __webpack_require__(6);
 
 var _vueRouter2 = _interopRequireDefault(_vueRouter);
 
@@ -14682,10 +14690,14 @@ var _fdAbout = __webpack_require__(38);
 
 var _fdAbout2 = _interopRequireDefault(_fdAbout);
 
+var _fdOneSituation = __webpack_require__(43);
+
+var _fdOneSituation2 = _interopRequireDefault(_fdOneSituation);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = new _vueRouter2.default({
-  routes: [{ path: '/', redirect: '/start' }, { path: '/start', component: _fdStart2.default }, { path: '/add', component: _fdAdd2.default }, { path: '/situations', component: _fdSituations2.default }, { path: '/about', component: _fdAbout2.default }]
+  routes: [{ path: '/', redirect: '/start' }, { path: '/start', component: _fdStart2.default }, { path: '/add', component: _fdAdd2.default }, { path: '/situations', component: _fdSituations2.default }, { path: '/about', component: _fdAbout2.default }, { path: '/situation/:id', component: _fdOneSituation2.default, name: 'oneSituation' }]
 });
 
 /***/ }),
@@ -15008,7 +15020,7 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _situationService = __webpack_require__(6);
+var _situationService = __webpack_require__(4);
 
 var _situationService2 = _interopRequireDefault(_situationService);
 
@@ -15018,105 +15030,13 @@ exports.default = {
 	name: 'fdSituations',
 	data: function data() {
 		return {
-			situations: [],
-			alphaAssign: false,
-			whatthehellisthis: []
+			situations: []
 		};
-	},
-
-	methods: {
-		calculateByOptimist: function calculateByOptimist() {},
-		calculateByPesimist: function calculateByPesimist() {},
-		calculateByHurwicz: function calculateByHurwicz() {},
-		calculateByLaplace: function calculateByLaplace() {},
-		calculateBySavage: function calculateBySavage() {},
-		Create2DArray: function Create2DArray(rows) {
-			for (var i = 0; i < rows; i++) {
-				this.whatthehellisthis[i] = [];
-			}
-		}
 	},
 	created: function created() {
 		this.situations = _situationService2.default.getSituations();
-		this.Create2DArray(this.situations[0].scenarios.length);
 	}
 }; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -15189,204 +15109,80 @@ var render = function() {
       _vm._v(" "),
       _vm._l(_vm.situations, function(sit, i) {
         return _c("div", { staticClass: "row tableRow" }, [
-          _c("div", { staticClass: "col-md-10 offset-1" }, [
-            !_vm.situations.length
-              ? _c("h2", { staticClass: "noSituations" }, [
-                  _vm._v("\n\t\t\t\tNo posee situaciones aun\n\t\t\t")
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-12" }, [
-                _c(
-                  "table",
-                  { staticClass: "table table-bordered table-responsive" },
-                  [
-                    _c(
-                      "thead",
-                      [
-                        _c(
-                          "tr",
-                          { staticClass: "trow" },
-                          [
-                            _vm._m(1, true),
-                            _vm._v(" "),
-                            _vm._l(_vm.situations[i].alternatives, function(
-                              alt
-                            ) {
-                              return _c("th", { attrs: { scope: "col" } }, [
-                                _vm._v(
-                                  "\n\t\t\t\t\t\t\t\t\t" +
-                                    _vm._s(alt) +
-                                    "\n\t\t\t\t\t\t\t\t"
-                                )
-                              ])
-                            })
-                          ],
-                          2
-                        ),
-                        _vm._v(" "),
-                        _vm._l(_vm.situations[i].scenarios, function(scen, y) {
-                          return _c(
-                            "tr",
-                            [
-                              _c("td", { attrs: { scope: "row" } }, [
-                                _vm._v(
-                                  "\n\t\t\t\t\t\t\t\t\t" +
-                                    _vm._s(scen) +
-                                    "\n\t\t\t\t\t\t\t\t"
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _vm._l(_vm.situations[i].alternatives, function(
-                                alt,
-                                x
-                              ) {
-                                return _c("td", [
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.whatthehellisthis[x][y],
-                                        expression: "whatthehellisthis[x][y]"
-                                      }
-                                    ],
-                                    attrs: { type: "number", name: "" },
-                                    domProps: {
-                                      value: _vm.whatthehellisthis[x][y]
-                                    },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.$set(
-                                          _vm.whatthehellisthis[x],
-                                          y,
-                                          $event.target.value
-                                        )
-                                      }
-                                    }
-                                  })
-                                ])
-                              })
-                            ],
-                            2
-                          )
+          _c(
+            "div",
+            { staticClass: "col-md-10 offset-1" },
+            [
+              !_vm.situations.length
+                ? _c("h2", { staticClass: "noSituations" }, [
+                    _vm._v("\n\t\t\t\t\tNo posee situaciones aun\n\t\t\t\t")
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("div", { staticClass: "row showFeatures" }, [
+                _c("div", { staticClass: "col-md-5" }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-12" }, [
+                      _c("h3", { staticClass: "tittle" }, [
+                        _vm._v(_vm._s(sit.tittle))
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-12" }, [
+                      _c("h6", [_vm._v("Alternativas:")]),
+                      _vm._v(" "),
+                      _c(
+                        "ul",
+                        _vm._l(sit.alternatives, function(alternative) {
+                          return _c("li", [
+                            _vm._v(
+                              "\n\t\t\t\t\t\t\t\t\t\t" +
+                                _vm._s(alternative) +
+                                "\n\t\t\t\t\t\t\t\t\t"
+                            )
+                          ])
                         })
-                      ],
-                      2
-                    )
-                  ]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _vm._m(2, true),
-            _vm._v(" "),
-            _c("div", { staticClass: "row selectAnOption" }, [
-              _c("div", { staticClass: "col-md-2 offset-1" }, [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-md-12" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-success btn-lg btn-block",
-                        on: {
-                          click: function($event) {
-                            _vm.calculateByOptimist()
-                          }
-                        }
-                      },
-                      [_vm._v("\n\t\t\t\t\t\t\t\tOptimista\n\t\t\t\t\t\t\t")]
-                    )
+                      )
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-5 offset-2" }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-12" }, [
+                      _c("h6", [_vm._v("Escenarios:")]),
+                      _vm._v(" "),
+                      _c(
+                        "ul",
+                        _vm._l(sit.scenarios, function(scenario) {
+                          return _c("li", [
+                            _vm._v(
+                              "\n\t\t\t\t\t\t\t\t\t\t" +
+                                _vm._s(scenario) +
+                                "\n\t\t\t\t\t\t\t\t\t"
+                            )
+                          ])
+                        })
+                      )
+                    ])
                   ])
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-md-2" }, [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-md-12" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger btn-lg btn-block",
-                        on: { click: _vm.calculateByPesimist }
-                      },
-                      [_vm._v("\n\t\t\t\t\t\t\t\tPesimista\n\t\t\t\t\t\t\t")]
-                    )
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-2" }, [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-md-12" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-warning btn-lg btn-block",
-                        attrs: {
-                          onclick:
-                            "document.getElementById('forHurwicz').style.display='block';"
-                        },
-                        on: { click: _vm.calculateByHurwicz }
-                      },
-                      [_vm._v("\n\t\t\t\t\t\t\t\tHurwicz\n\t\t\t\t\t\t\t")]
-                    )
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-2" }, [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-md-12" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-info btn-lg btn-block",
-                        on: { click: _vm.calculateByLaplace }
-                      },
-                      [_vm._v("\n\t\t\t\t\t\t\t\tLaplace\n\t\t\t\t\t\t\t")]
-                    )
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-2" }, [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-md-12" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary btn-lg btn-block",
-                        on: { click: _vm.calculateBySavage }
-                      },
-                      [_vm._v("\n\t\t\t\t\t\t\t\tSavage\n\t\t\t\t\t\t\t")]
-                    )
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.alphaAssign == true,
-                    expression: "alphaAssign == true"
+              _c(
+                "router-link",
+                {
+                  attrs: {
+                    to: { name: "oneSituation", params: { id: sit.id } }
                   }
-                ],
-                staticClass: "row forHurwicz",
-                attrs: { id: "forHurwicz" }
-              },
-              [_vm._m(3, true)]
-            )
-          ])
+                },
+                [_c("p", [_vm._v("Ir a la situacion")])]
+              )
+            ],
+            1
+          )
         ])
       })
     ],
@@ -15400,57 +15196,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-md-12" }, [
       _c("h3", { staticClass: "situationsTitle" }, [
-        _vm._v("\n\t\t\t\tSituaciones creadas\n\t\t\t")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", { attrs: { scope: "col" } }, [
-      _c("img", { attrs: { width: "", src: "/images/tableSeparator.jpg" } })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("h4", { staticClass: "options" }, [
-          _vm._v(
-            "\n\t\t\t\t\t\tSelecciona tu postura para tomar una decision\n\t\t\t\t\t"
-          )
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-2 offset-5" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-12" }, [
-          _c("h6", { staticStyle: { "text-align": "center" } }, [
-            _vm._v("Ingresa el "),
-            _c("strong", [_vm._v("α")]),
-            _vm._v(": ")
-          ]),
-          _vm._v(" "),
-          _c("input", { staticClass: "form-control", attrs: { type: "text" } }),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-warning btn-sm btnAssignAlpha",
-              staticStyle: {},
-              attrs: { onclick: "this.parentElement.style.display='none';" }
-            },
-            [_vm._v("\n\t\t\t\t\t\t\t\tAceptar\n\t\t\t\t\t\t\t")]
-          )
-        ])
+        _vm._v("\n\t\t\t\t\tSituaciones creadas\n\t\t\t\t")
       ])
     ])
   }
@@ -15573,7 +15319,7 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _situationService = __webpack_require__(6);
+var _situationService = __webpack_require__(4);
 
 var _situationService2 = _interopRequireDefault(_situationService);
 
@@ -15587,7 +15333,7 @@ exports.default = {
 			alternatives: [],
 			scenario: '',
 			scenarios: [],
-			situations: []
+			tittle: ''
 		};
 	},
 
@@ -15599,7 +15345,10 @@ exports.default = {
 			return this.scenario;
 		},
 		noNothing: function noNothing() {
-			return this.alternatives.length && this.scenarios.length;
+			return this.alternatives.length > 1 && this.scenarios.length > 1;
+		},
+		noTittle: function noTittle() {
+			return this.tittle;
 		}
 	},
 	methods: {
@@ -15608,6 +15357,7 @@ exports.default = {
 			this.alternatives = [];
 			this.scenario = '';
 			this.scenarios = [];
+			this.tittle = '';
 		},
 		addAlternative: function addAlternative(alternative) {
 			this.alternatives.push(alternative);
@@ -15618,12 +15368,15 @@ exports.default = {
 			this.scenario = '';
 		},
 		addSituation: function addSituation() {
-			this.situations = _situationService2.default.getSituations();
-			_situationService2.default.addSituation(this.alternatives, this.scenarios);
+			_situationService2.default.addSituation(this.alternatives, this.scenarios, this.tittle);
 			this.clearAll();
 		}
 	}
 }; //
+//
+//
+//
+//
 //
 //
 //
@@ -15874,7 +15627,23 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm._m(1),
+    _c("div", { staticClass: "row almostAdd" }, [
+      _c("div", { staticClass: "col-md-6 offset-3" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary btn-block",
+            attrs: {
+              disabled: !_vm.noNothing,
+              type: "button",
+              "data-toggle": "modal",
+              "data-target": "#exampleModal"
+            }
+          },
+          [_vm._v("\n\t\t\t\tAgregar situacion\n\t\t\t")]
+        )
+      ])
+    ]),
     _vm._v(" "),
     _c(
       "div",
@@ -15894,13 +15663,38 @@ var render = function() {
           { staticClass: "modal-dialog", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(2),
+              _vm._m(1),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _vm._v(
-                  "\n\t\t        \tEstas seguro de agregar esta situacion?\n\t\t      \t"
+                  "\n\t\t        \tEstas seguro de agregar esta situacion?\n\t\t        \tAgregue título y confirme.\n\t\t      \t"
                 )
               ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.tittle,
+                    expression: "tittle"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  placeholder: "Construccion de edificio.."
+                },
+                domProps: { value: _vm.tittle },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.tittle = $event.target.value
+                  }
+                }
+              }),
               _vm._v(" "),
               _c("div", { staticClass: "modal-footer" }, [
                 _c(
@@ -15916,7 +15710,11 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-primary",
-                    attrs: { type: "button", "data-dismiss": "modal" },
+                    attrs: {
+                      disabled: !_vm.noTittle,
+                      type: "button",
+                      "data-dismiss": "modal"
+                    },
                     on: {
                       click: function($event) {
                         _vm.addSituation()
@@ -15943,27 +15741,6 @@ var staticRenderFns = [
         _c("h3", { staticClass: "title" }, [
           _vm._v("Ingresa los datos necesarios para crear la situacion")
         ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row almostAdd" }, [
-      _c("div", { staticClass: "col-md-6 offset-3" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-primary btn-block",
-            attrs: {
-              type: "button",
-              "data-toggle": "modal",
-              "data-target": "#exampleModal"
-            }
-          },
-          [_vm._v("\n\t\t\t\tAgregar situacion\n\t\t\t")]
-        )
       ])
     ])
   },
@@ -16448,6 +16225,739 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-4ef06ac2", esExports)
+  }
+}
+
+/***/ }),
+/* 43 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_fd_oneSituation_vue__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_fd_oneSituation_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_fd_oneSituation_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_74818496_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_fd_oneSituation_vue__ = __webpack_require__(47);
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(44)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+
+/* template */
+
+/* template functional */
+  var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_fd_oneSituation_vue___default.a,
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_74818496_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_fd_oneSituation_vue__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src\\components\\fd-oneSituation.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-74818496", Component.options)
+  } else {
+    hotAPI.reload("data-v-74818496", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
+
+
+/***/ }),
+/* 44 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(45);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("4ac54cb9", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-74818496\",\"scoped\":false,\"hasInlineConfig\":false}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./fd-oneSituation.vue", function() {
+     var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-74818496\",\"scoped\":false,\"hasInlineConfig\":false}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./fd-oneSituation.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 45 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n.trow {\n\tpadding-left: -300px;\n}\n.situationsTitle {\n\tmargin-top: 50px;\n\ttext-align: center;\n\tmargin-bottom: 25px;\n}\n.noSituations {\n\ttext-align: center;\n\tmargin-top: 200px;\n}\n.tableRow {\n\tmargin-top: 50px;\n}\n.options {\n\ttext-align: center;\n\tmargin-bottom: 30px;\n}\n.selectAnOption {\n\tmargin-bottom: 50px;\n}\n.forHurwicz {\n\tmargin-top: -45px;\n}\n.btnAssignAlpha {\n\tmargin-top: 10px;\n\tmargin-left: 30px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 46 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _situationService = __webpack_require__(4);
+
+var _situationService2 = _interopRequireDefault(_situationService);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+	name: 'fdOneSituation',
+	data: function data() {
+		return {
+			situation: {},
+			alphaAssign: false,
+			alpha: 0,
+			fields: [],
+			calcular: false,
+			resultados: [],
+			decision: '',
+			postura: ''
+		};
+	},
+
+	computed: {
+		Id: function Id() {
+			return this.$route.params.id;
+		} /*,
+    noAllTheFields(){
+    let isField = true;
+    for (let i=0;i<this.situation.scenarios.length;i++){
+    	for(let j=0;j<this.situation.alternatives.length;j++){
+    		if(!this.fields[i][j]){
+    			isField = false;
+    		}
+    	}
+    	return isField;
+    }
+    }*/
+
+	},
+	methods: {
+		calculateByOptimist: function calculateByOptimist() {
+			this.resultados = [];
+			this.decision = '';
+			//busca el mayor de cada columna
+			for (var i = 0; i < this.situation.alternatives.length; i++) {
+				var _resultado = this.fields[i][0];
+				for (var j = 0; j < this.situation.scenarios.length; j++) {
+					if (this.fields[i][j] > _resultado) {
+						_resultado = this.fields[i][j];
+					}
+				}
+				this.resultados.push(_resultado);
+			}
+			//busca el mayor de los mayores
+			var resultado = this.resultados[0];
+			for (var _i = 0; _i < this.resultados.length; _i++) {
+				if (this.resultados[_i] > resultado) {
+					resultado = this.resultados[_i];
+				}
+			}
+			this.postura = "Optimista";
+			this.calcular = true;
+			this.decision = this.situation.alternatives[this.resultados.indexOf(resultado)];
+		},
+		calculateByPesimist: function calculateByPesimist() {
+			this.resultados = [];
+			this.decision = '';
+			//busca el menor de cada columna
+			for (var i = 0; i < this.situation.alternatives.length; i++) {
+				var _resultado2 = this.fields[i][0];
+				for (var j = 0; j < this.situation.scenarios.length; j++) {
+					if (this.fields[i][j] < _resultado2) {
+						_resultado2 = this.fields[i][j];
+					}
+				}
+				this.resultados.push(_resultado2);
+			}
+			//busca el mayor de los menores
+			var resultado = this.resultados[0];
+			for (var _i2 = 0; _i2 < this.resultados.length; _i2++) {
+				if (this.resultados[_i2] > resultado) {
+					resultado = this.resultados[_i2];
+				}
+			}
+			this.postura = "Pesimista";
+			this.calcular = true;
+			this.decision = this.situation.alternatives[this.resultados.indexOf(resultado)];
+		},
+		calculateByHurwicz: function calculateByHurwicz() {
+			this.resultados = [];
+			this.decision = '';
+			for (var i = 0; i < this.situation.alternatives.length; i++) {
+				//busca el mayor de cada columna
+				var mayor = this.fields[i][0];
+				for (var j = 0; j < this.situation.scenarios.length; j++) {
+					if (this.fields[i][j] > mayor) {
+						mayor = this.fields[i][j];
+					}
+				}
+				//busca el menor de cada columna
+				var menor = this.fields[i][0];
+				for (var _j = 0; _j < this.situation.scenarios.length; _j++) {
+					if (this.fields[i][_j] < menor) {
+						menor = this.fields[i][_j];
+					}
+				}
+				//hace la cuenta con el apha
+				var valor = this.alpha / 10 * mayor + (1 - this.alpha / 10) * menor;
+				this.resultados.push(valor);
+			}
+			//busca el mayor de los resultados
+			var resultado = this.resultados[0];
+			for (var _i3 = 0; _i3 < this.resultados.length; _i3++) {
+				if (this.resultados[_i3] > resultado) {
+					resultado = this.resultados[_i3];
+				}
+			}
+			this.postura = "Hurwicz con alpha:" + this.alpha / 10;
+			this.calcular = true;
+			this.decision = this.situation.alternatives[this.resultados.indexOf(resultado)];
+		},
+		calculateByLaplace: function calculateByLaplace() {
+			this.resultados = [];
+			this.decision = '';
+			//sacar promedio de cada columna
+			var total = 0;
+			var cant = 0;
+			var promedio = 0;
+			for (var i = 0; i < this.situation.alternatives.length; i++) {
+				total = 0;
+				cant = 0;
+				promedio = 0;
+				for (var j = 0; j < this.situation.scenarios.length; j++) {
+					total = total + this.fields[i][j];
+					cant = cant + 1;
+				}
+				promedio = total / cant;
+				this.resultados.push(promedio);
+			}
+			//busca el mayor de los resultados
+			var resultado = this.resultados[0];
+			for (var _i4 = 0; _i4 < this.resultados.length; _i4++) {
+				if (this.resultados[_i4] > resultado) {
+					resultado = this.resultados[_i4];
+				}
+			}
+			this.postura = "Laplace";
+			this.calcular = true;
+			this.decision = this.situation.alternatives[this.resultados.indexOf(resultado)];
+		},
+		calculateBySavage: function calculateBySavage() {},
+		Create2DArray: function Create2DArray(rows) {
+			for (var i = 0; i < rows; i++) {
+				this.fields[i] = [];
+			}
+		}
+	},
+	watch: {
+		'$route.params.id': function $routeParamsId() {
+			this.situation = _situationService2.default.getSituationById(this.Id);
+		}
+	},
+	created: function created() {
+		this.situation = _situationService2.default.getSituationById(this.Id);
+		this.Create2DArray(this.situation.scenarios.length);
+	}
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/***/ }),
+/* 47 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "col-md-12" }, [
+      _c("h3", { staticClass: "situationsTitle" }, [
+        _vm._v("\n\t\t\t" + _vm._s(_vm.situation.tittle) + "\n\t\t")
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row tableRow" }, [
+      _c("div", { staticClass: "col-md-10 offset-1" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c(
+              "table",
+              { staticClass: "table table-bordered table-responsive" },
+              [
+                _c(
+                  "thead",
+                  [
+                    _c(
+                      "tr",
+                      { staticClass: "trow" },
+                      [
+                        _vm._m(0),
+                        _vm._v(" "),
+                        _vm._l(_vm.situation.alternatives, function(alt) {
+                          return _c("th", { attrs: { scope: "col" } }, [
+                            _vm._v(
+                              "\n\t\t\t\t\t\t\t\t\t" +
+                                _vm._s(alt) +
+                                "\n\t\t\t\t\t\t\t\t"
+                            )
+                          ])
+                        })
+                      ],
+                      2
+                    ),
+                    _vm._v(" "),
+                    _vm._l(_vm.situation.scenarios, function(scen, y) {
+                      return _c(
+                        "tr",
+                        [
+                          _c("td", { attrs: { scope: "row" } }, [
+                            _vm._v(
+                              "\n\t\t\t\t\t\t\t\t\t" +
+                                _vm._s(scen) +
+                                "\n\t\t\t\t\t\t\t\t"
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.situation.alternatives, function(alt, x) {
+                            return _c("td", [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.fields[x][y],
+                                    expression: "fields[x][y]"
+                                  }
+                                ],
+                                attrs: { type: "number", name: "" },
+                                domProps: { value: _vm.fields[x][y] },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.fields[x],
+                                      y,
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ])
+                          })
+                        ],
+                        2
+                      )
+                    }),
+                    _vm._v(" "),
+                    _vm.calcular
+                      ? _c(
+                          "tr",
+                          [
+                            _c("td", [_vm._v("Resultados:")]),
+                            _vm._v(" "),
+                            _vm._l(_vm.resultados, function(r) {
+                              return _c("td", [
+                                _vm._v(
+                                  "\n\t\t\t\t\t\t\t\t\t" +
+                                    _vm._s(r) +
+                                    "\n\t\t\t\t\t\t\t\t"
+                                )
+                              ])
+                            })
+                          ],
+                          2
+                        )
+                      : _vm._e()
+                  ],
+                  2
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _vm.decision
+              ? _c("h3", [
+                  _vm._v("Alternativa a elegir: " + _vm._s(_vm.decision))
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.postura
+              ? _c("h3", [_vm._v("Postura utilizada: " + _vm._s(_vm.postura))])
+              : _vm._e()
+          ])
+        ]),
+        _vm._v(" "),
+        _vm._m(1),
+        _vm._v(" "),
+        _c("div", { staticClass: "row selectAnOption" }, [
+          _c("div", { staticClass: "col-md-2 offset-1" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-12" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success btn-lg btn-block",
+                    on: {
+                      click: function($event) {
+                        _vm.calculateByOptimist()
+                      }
+                    }
+                  },
+                  [_vm._v("\n\t\t\t\t\t\t\t\tOptimista\n\t\t\t\t\t\t\t")]
+                )
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-2" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-12" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger btn-lg btn-block",
+                    on: { click: _vm.calculateByPesimist }
+                  },
+                  [_vm._v("\n\t\t\t\t\t\t\t\tPesimista\n\t\t\t\t\t\t\t")]
+                )
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _vm._m(2),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-2" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-12" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-info btn-lg btn-block",
+                    on: { click: _vm.calculateByLaplace }
+                  },
+                  [_vm._v("\n\t\t\t\t\t\t\t\tLaplace\n\t\t\t\t\t\t\t")]
+                )
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-2" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-12" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary btn-lg btn-block",
+                    on: { click: _vm.calculateBySavage }
+                  },
+                  [_vm._v("\n\t\t\t\t\t\t\t\tSavage\n\t\t\t\t\t\t\t")]
+                )
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.alphaAssign == true,
+                expression: "alphaAssign == true"
+              }
+            ],
+            staticClass: "row forHurwicz",
+            attrs: { id: "forHurwicz" }
+          },
+          [
+            _c("div", { staticClass: "col-md-2 offset-5" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _vm._m(3),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.alpha,
+                        expression: "alpha"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "number", min: "0" },
+                    domProps: { value: _vm.alpha },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.alpha = $event.target.value
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-warning btn-sm btnAssignAlpha",
+                      staticStyle: {},
+                      attrs: {
+                        onclick: "this.parentElement.style.display='none';"
+                      },
+                      on: { click: _vm.calculateByHurwicz }
+                    },
+                    [_vm._v("\n\t\t\t\t\t\t\t\tAceptar\n\t\t\t\t\t\t\t")]
+                  )
+                ])
+              ])
+            ])
+          ]
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", { attrs: { scope: "col" } }, [
+      _c("img", { attrs: { width: "", src: "/images/tableSeparator.jpg" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("h4", { staticClass: "options" }, [
+          _vm._v(
+            "\n\t\t\t\t\t\tSelecciona tu postura para tomar una decision\n\t\t\t\t\t"
+          )
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-2" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-12" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-warning btn-lg btn-block",
+              attrs: {
+                onclick:
+                  "document.getElementById('forHurwicz').style.display='block';"
+              }
+            },
+            [_vm._v("\n\t\t\t\t\t\t\t\tHurwicz\n\t\t\t\t\t\t\t")]
+          )
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h6", { staticStyle: { "text-align": "center" } }, [
+      _vm._v("Ingresa el "),
+      _c("strong", [_vm._v("α")]),
+      _vm._v(": 0.")
+    ])
+  }
+]
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-74818496", esExports)
   }
 }
 

@@ -61,7 +61,7 @@
 		</div>
 		<div class="row almostAdd">
 			<div class="col-md-6 offset-3">
-				<button type="button" class="btn btn-primary btn-block" 
+				<button :disabled="!noNothing" type="button" class="btn btn-primary btn-block" 
 					data-toggle="modal"data-target="#exampleModal">
 					Agregar situacion
 				</button>
@@ -79,12 +79,16 @@
 			      	</div>
 			      	<div class="modal-body">
 			        	Estas seguro de agregar esta situacion?
+			        	Agregue título y confirme.
 			      	</div>
+			      	<input v-model="tittle" type="text" class="form-control" 
+							placeholder="Construccion de edificio..">
 			      	<div class="modal-footer">
 			        	<button type="button" class="btn btn-secondary" data-dismiss="modal">
 			        		Cancelar
 			        	</button>
-			        	<button type="button" class="btn btn-primary" data-dismiss="modal" @click="addSituation()">Si, estoy seguro</button>
+			        	<button :disabled="!noTittle" type="button" class="btn btn-primary" data-dismiss="modal" 
+			        			@click="addSituation()">Si, estoy seguro</button>
 			      	</div>
 			    </div>
 		  	</div>
@@ -103,7 +107,7 @@
 				alternatives: [],
 				scenario: '',
 				scenarios: [],
-				situations: []
+				tittle: ''
 			}
 		},
 		computed: {
@@ -114,7 +118,10 @@
 				return this.scenario;
 			},
 			noNothing() {
-				return this.alternatives.length && this.scenarios.length;
+				return this.alternatives.length > 1 && this.scenarios.length > 1;
+			},
+			noTittle(){
+				return this.tittle;
 			}
 		},
 		methods: {
@@ -123,6 +130,7 @@
 				this.alternatives = [];
 				this.scenario = '';
 				this.scenarios = [];
+				this.tittle = '';
 			},
 			addAlternative(alternative) {
 				this.alternatives.push(alternative);
@@ -133,8 +141,7 @@
 				this.scenario = '';
 			},
 			addSituation(){
-				this.situations = situationService.getSituations();
-				situationService.addSituation(this.alternatives, this.scenarios);
+				situationService.addSituation(this.alternatives, this.scenarios, this.tittle);
 				this.clearAll();
 			}
 		}
