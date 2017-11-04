@@ -276,7 +276,45 @@
 				this.decision = this.situation.alternatives[this.resultados.indexOf(resultado)];
 			},
 			calculateBySavage() {
+				this.resultados = [];
+				this.decision = '';
+				//generar nueva tabla con valores restados
 
+				let newFields = Object.assign(this.fields, newFields);
+				// let newFields = this.fields.concat([]);  NI ESTA NI LA LINEA DE ARRIBA FUNCIONAN PARA QUE NO SE CAMBIEN LOS VALORES DE PANTALLA, NO SE POR QUE
+				for(let i=0;i<this.situation.alternatives.length;i++){
+					//busca el mayor de cada columna
+					let mayor = this.fields[i][0];
+					for(let j=0;j<this.situation.scenarios.length;j++){
+						if(this.fields[i][j]>mayor){
+							mayor = this.fields[i][j];
+						}
+					}
+					//reemplaza valores
+					for(let j=0;j<this.situation.scenarios.length;j++){
+						newFields[i][j] = mayor - newFields[i][j];
+					}
+				}
+				//buscar mayores de cada columna en tabla nueva
+				for(let i=0;i<this.situation.alternatives.length;i++){
+					let resultado = newFields[i][0];
+					for(let j=0;j<this.situation.scenarios.length;j++){
+						if(newFields[i][j]>resultado){
+							resultado = newFields[i][j];
+						}
+					}
+					this.resultados.push(resultado); 
+				}
+				//buscar el menor de los mayores
+				let resultado = this.resultados[0];
+				for(let i=0;i<this.resultados.length;i++){
+					if(this.resultados[i]<resultado){
+						resultado = this.resultados[i];
+					}
+				}
+				this.postura = "Savage";
+				this.calcular = true;
+				this.decision = this.situation.alternatives[this.resultados.indexOf(resultado)];
 			},
 			Create2DArray(rows) {
 			for (let i=0;i<rows;i++) {

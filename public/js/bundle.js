@@ -16485,7 +16485,47 @@ exports.default = {
 			this.calcular = true;
 			this.decision = this.situation.alternatives[this.resultados.indexOf(resultado)];
 		},
-		calculateBySavage: function calculateBySavage() {},
+		calculateBySavage: function calculateBySavage() {
+			this.resultados = [];
+			this.decision = '';
+			//generar nueva tabla con valores restados
+
+			var newFields = Object.assign(this.fields, newFields);
+			// let newFields = this.fields.concat([]);  NI ESTA NI LA LINEA DE ARRIBA FUNCIONAN PARA QUE NO SE CAMBIEN LOS VALORES DE PANTALLA, NO SE POR QUE
+			for (var i = 0; i < this.situation.alternatives.length; i++) {
+				//busca el mayor de cada columna
+				var mayor = this.fields[i][0];
+				for (var j = 0; j < this.situation.scenarios.length; j++) {
+					if (this.fields[i][j] > mayor) {
+						mayor = this.fields[i][j];
+					}
+				}
+				//reemplaza valores
+				for (var _j2 = 0; _j2 < this.situation.scenarios.length; _j2++) {
+					newFields[i][_j2] = mayor - newFields[i][_j2];
+				}
+			}
+			//buscar mayores de cada columna en tabla nueva
+			for (var _i5 = 0; _i5 < this.situation.alternatives.length; _i5++) {
+				var _resultado3 = newFields[_i5][0];
+				for (var _j3 = 0; _j3 < this.situation.scenarios.length; _j3++) {
+					if (newFields[_i5][_j3] > _resultado3) {
+						_resultado3 = newFields[_i5][_j3];
+					}
+				}
+				this.resultados.push(_resultado3);
+			}
+			//buscar el menor de los mayores
+			var resultado = this.resultados[0];
+			for (var _i6 = 0; _i6 < this.resultados.length; _i6++) {
+				if (this.resultados[_i6] < resultado) {
+					resultado = this.resultados[_i6];
+				}
+			}
+			this.postura = "Savage";
+			this.calcular = true;
+			this.decision = this.situation.alternatives[this.resultados.indexOf(resultado)];
+		},
 		Create2DArray: function Create2DArray(rows) {
 			for (var i = 0; i < rows; i++) {
 				this.fields[i] = [];
