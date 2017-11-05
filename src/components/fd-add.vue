@@ -46,7 +46,7 @@
 				</div>
 				<div class="row">
 					<div class="col-md-12">
-						<h6>Escenarios agregados agregadas:</h6>
+						<h6>Escenarios agregados:</h6>
 						<p class="noContent" v-if="!scenarios.length">
 							No has agregado escenarios aun
 						</p>
