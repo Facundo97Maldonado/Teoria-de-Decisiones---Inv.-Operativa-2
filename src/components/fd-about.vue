@@ -67,58 +67,17 @@
 									Seleccionar la <strong>situacion</strong> correspondiente 
 								</h6>
 							</li>
+							<li class="element">
+								<h6>
+									Presionar <strong>ver situacion</strong>
+								</h6>
+							</li>
+							<li class="element">
+								<h6>
+									Seleccionar <strong>postura</strong> de la decision a tomar
+								</h6>
+							</li>
 						</ul>
-						<div class="row">
-							<div class="col-md-6 subList">
-								<div class="row">
-									<div class="col-md-12">
-										<h5 class="subTitle">
-											Sin datos
-										</h5>
-										<ul class="list">
-											<li class="element">
-												<h6>
-													Presionar <strong>ver situacion</strong>
-												</h6>
-											</li>
-											<li class="element">
-												<h6>
-													<strong>Agregar</strong> los datos correspondientes
-												</h6>
-											</li>
-											<li class="element">
-												<h6>
-													Seleccionar <strong>postura</strong> de 
-													la decision a tomar
-												</h6>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="row">
-									<div class="col-md-12">
-										<h5 class="subTitle">
-											Con datos
-										</h5>
-										<ul class="list">
-											<li class="element">
-												<h6>
-													Presionar <strong>ver situacion</strong>
-												</h6>
-											</li>
-											<li class="element">
-												<h6>
-													Seleccionar <strong>postura</strong> de
-													la decision a tomar
-												</h6>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>

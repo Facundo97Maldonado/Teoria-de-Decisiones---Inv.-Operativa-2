@@ -16059,47 +16059,6 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 exports.default = {
 	name: 'fdAbout'
@@ -16221,78 +16180,20 @@ var staticRenderFns = [
                     _c("strong", [_vm._v("situacion")]),
                     _vm._v(" correspondiente \n\t\t\t\t\t\t\t")
                   ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-6 subList" }, [
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-md-12" }, [
-                      _c("h5", { staticClass: "subTitle" }, [
-                        _vm._v(
-                          "\n\t\t\t\t\t\t\t\t\t\tSin datos\n\t\t\t\t\t\t\t\t\t"
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("ul", { staticClass: "list" }, [
-                        _c("li", { staticClass: "element" }, [
-                          _c("h6", [
-                            _vm._v("\n\t\t\t\t\t\t\t\t\t\t\t\tPresionar "),
-                            _c("strong", [_vm._v("ver situacion")])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("li", { staticClass: "element" }, [
-                          _c("h6", [
-                            _c("strong", [_vm._v("Agregar")]),
-                            _vm._v(
-                              " los datos correspondientes\n\t\t\t\t\t\t\t\t\t\t\t"
-                            )
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("li", { staticClass: "element" }, [
-                          _c("h6", [
-                            _vm._v("\n\t\t\t\t\t\t\t\t\t\t\t\tSeleccionar "),
-                            _c("strong", [_vm._v("postura")]),
-                            _vm._v(
-                              " de \n\t\t\t\t\t\t\t\t\t\t\t\tla decision a tomar\n\t\t\t\t\t\t\t\t\t\t\t"
-                            )
-                          ])
-                        ])
-                      ])
-                    ])
+                ]),
+                _vm._v(" "),
+                _c("li", { staticClass: "element" }, [
+                  _c("h6", [
+                    _vm._v("\n\t\t\t\t\t\t\t\tPresionar "),
+                    _c("strong", [_vm._v("ver situacion")])
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-md-6" }, [
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-md-12" }, [
-                      _c("h5", { staticClass: "subTitle" }, [
-                        _vm._v(
-                          "\n\t\t\t\t\t\t\t\t\t\tCon datos\n\t\t\t\t\t\t\t\t\t"
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("ul", { staticClass: "list" }, [
-                        _c("li", { staticClass: "element" }, [
-                          _c("h6", [
-                            _vm._v("\n\t\t\t\t\t\t\t\t\t\t\t\tPresionar "),
-                            _c("strong", [_vm._v("ver situacion")])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("li", { staticClass: "element" }, [
-                          _c("h6", [
-                            _vm._v("\n\t\t\t\t\t\t\t\t\t\t\t\tSeleccionar "),
-                            _c("strong", [_vm._v("postura")]),
-                            _vm._v(
-                              " de\n\t\t\t\t\t\t\t\t\t\t\t\tla decision a tomar\n\t\t\t\t\t\t\t\t\t\t\t"
-                            )
-                          ])
-                        ])
-                      ])
-                    ])
+                _c("li", { staticClass: "element" }, [
+                  _c("h6", [
+                    _vm._v("\n\t\t\t\t\t\t\t\tSeleccionar "),
+                    _c("strong", [_vm._v("postura")]),
+                    _vm._v(" de la decision a tomar\n\t\t\t\t\t\t\t")
                   ])
                 ])
               ])
@@ -16405,7 +16306,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "\n.results {\n\tmargin-top: 20px;\n\ttext-align: center;\n}\n.trow {\n\tpadding-left: -300px;\n}\n.situationsTitle {\n\tmargin-top: 50px;\n\ttext-align: center;\n\tmargin-bottom: 25px;\n}\n.noSituations {\n\ttext-align: center;\n\tmargin-top: 200px;\n}\n.tableRow {\n\tmargin-top: 50px;\n}\n.options {\n\ttext-align: center;\n\tmargin-bottom: 30px;\n}\n.selectAnOption {\n\tmargin-bottom: 50px;\n}\n.forHurwicz {\n\tmargin-top: -45px;\n}\n.btnAssignAlpha {\n\tmargin-top: 10px;\n\tmargin-left: 30px;\n}\n", ""]);
+exports.push([module.i, "\n.trow {\n\tpadding-left: -300px;\n}\n.situationsTitle {\n\tmargin-top: 50px;\n\ttext-align: center;\n\tmargin-bottom: 25px;\n}\n.noSituations {\n\ttext-align: center;\n\tmargin-top: 200px;\n}\n.tableRow {\n\tmargin-top: 50px;\n}\n.options {\n\ttext-align: center;\n\tmargin-bottom: 30px;\n}\n.selectAnOption {\n\tmargin-bottom: 50px;\n}\n.forHurwicz {\n\tmargin-top: -45px;\n}\n.btnAssignAlpha {\n\tmargin-top: 10px;\n\tmargin-left: 30px;\n}\n", ""]);
 
 // exports
 
@@ -16447,6 +16348,10 @@ exports.default = {
 			return this.$route.params.id;
 		},
 		unsettedValues: function unsettedValues() {
+			///////////////////////////////////////////////////// L
+			///////////////////////////////////////////////////// E
+			///////////////////////////////////////////////////// E
+			//No se que valores son los de los inputs, fijate si podes arreglar esto
 			if ((this.fields && this.resultados) != []) {
 				return this.fields && this.resultados;
 			}
@@ -16632,11 +16537,6 @@ exports.default = {
 		this.Create2DArray(this.situation.scenarios.length);
 	}
 }; //
-//
-//
-//
-//
-//
 //
 //
 //
@@ -17087,8 +16987,6 @@ var render = function() {
       "div",
       { staticClass: "row", staticStyle: { "margin-bottom": "75px" } },
       [
-        _vm._m(3),
-        _vm._v(" "),
         _c("div", { staticClass: "col-md-6" }, [
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-md-12" }, [
@@ -17153,14 +17051,6 @@ var staticRenderFns = [
       _vm._v("Ingresa el "),
       _c("strong", [_vm._v("α")]),
       _vm._v(": 0.")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "results" }, [
-      _c("h3", [_vm._v("\n\t\t\t\tResultados:\n\t\t\t")])
     ])
   }
 ]
