@@ -87,7 +87,8 @@
 			        	<button type="button" class="btn btn-secondary" data-dismiss="modal">
 			        		Cancelar
 			        	</button>
-			        	<button :disabled="!noTittle" type="button" class="btn btn-primary" data-dismiss="modal" 
+			        	<button :disabled="!noTittle" type="button" class="btn btn-primary" 
+			        			data-dismiss="modal" 
 			        			@click="addSituation()">Si, estoy seguro</button>
 			      	</div>
 			    </div>
