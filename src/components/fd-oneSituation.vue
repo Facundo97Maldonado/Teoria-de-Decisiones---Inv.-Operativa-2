@@ -189,17 +189,17 @@
             	if((this.fields && this.resultados) != []) {
             		return this.fields && this.resultados;
             	}
-            }/*,
+            }/*
             noAllTheFields(){
             	let isField = true;
-            	for (let i=0;i<this.situation.scenarios.length;i++){
-            		for(let j=0;j<this.situation.alternatives.length;j++){
+            	for (let i=0;i<this.situation.alternatives.length;i++){
+            		for(let j=0;j<this.situation.scenarios.length;j++){
             			if(!this.fields[i][j]){
             				isField = false;
             			}
             		}
-            		return isField;
             	}
+            	return isField;
             }*/
         },
 		methods: {
@@ -305,9 +305,6 @@
 						cant = cant + 1;
 					}
 					promedio = total/cant;
-					console.log(total);
-					console.log(cant);
-					console.log(promedio);
 					this.resultados.push(promedio);
 				}
 				//Searchs the bigger of the results
