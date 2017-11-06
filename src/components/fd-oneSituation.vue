@@ -329,7 +329,7 @@
         },
 		created(){
 			this.situation = situationService.getSituationById(this.Id);
-			this.Create2DArray(this.situation.scenarios.length);
+			this.Create2DArray(this.situation.alternatives.length);
 		}
 	}
 </script>

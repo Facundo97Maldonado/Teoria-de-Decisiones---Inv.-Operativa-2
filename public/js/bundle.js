@@ -16539,7 +16539,7 @@ exports.default = {
 	},
 	created: function created() {
 		this.situation = _situationService2.default.getSituationById(this.Id);
-		this.Create2DArray(this.situation.scenarios.length);
+		this.Create2DArray(this.situation.alternatives.length);
 	}
 }; //
 //
