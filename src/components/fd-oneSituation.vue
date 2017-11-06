@@ -10,7 +10,7 @@
 				<!-- TABLE GENERATED -->
 				<div class="row">
 					<div class="col-md-12">
-						<table class="table table-bordered table-responsive">
+						<table class="table table-responsive">
 							<thead>
 								<tr class="trow">
 									<th scope="col">
@@ -26,7 +26,8 @@
 										{{scen}}
 									</td>
 									<td v-for="(alt,x) in situation.alternatives"> 
-										<input type="number" name=""  v-model="fields[x][y]">
+										<input class="form-control" type="number" 
+											name=""  v-model="fields[x][y]">
 										<!-- EMPTY INPUTS HERE --> 
 									</td>
 								</tr>
@@ -38,14 +39,12 @@
 								</tr>
 							</thead>
 						</table>
-						<h3 v-if="decision">Alternativa a elegir: {{decision}}</h3>
-						<h3 v-if="postura">Postura utilizada: {{postura}}</h3>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12">
 						<h4 class="options">
-							Selecciona tu postura para tomar una decision
+							Selecciona tu postura para tomar una decision:
 						</h4>
 					</div>
 				</div>
@@ -55,7 +54,8 @@
 					<div class="col-md-2 offset-1">
 						<div class="row">
 							<div class="col-md-12">
-								<button @click="calculateByOptimist()" 
+								<button :disabled="!unsettedValues"
+									@click="calculateByOptimist()" 
 									class="btn btn-success btn-lg btn-block">
 									Optimista
 								</button>
@@ -66,7 +66,8 @@
 					<div class="col-md-2">
 						<div class="row">
 							<div class="col-md-12">
-								<button @click="calculateByPesimist" 
+								<button :disabled="!unsettedValues"
+									@click="calculateByPesimist()" 
 									class="btn btn-danger btn-lg btn-block">
 									Pesimista
 								</button>
@@ -77,7 +78,7 @@
 					<div class="col-md-2">
 						<div class="row">
 							<div class="col-md-12">
-								<button 
+								<button :disabled="!unsettedValues"
 									onclick="document.getElementById('forHurwicz').style.display='block';"
 									class="btn btn-warning btn-lg btn-block">
 									Hurwicz
@@ -89,7 +90,8 @@
 					<div class="col-md-2">
 						<div class="row">
 							<div class="col-md-12">
-								<button @click="calculateByLaplace"
+								<button :disabled="!unsettedValues"
+									@click="calculateByLaplace()"
 									class="btn btn-info btn-lg btn-block">
 									Laplace
 								</button>
@@ -100,7 +102,8 @@
 					<div class="col-md-2">
 						<div class="row">
 							<div class="col-md-12">
-								<button @click="calculateBySavage"
+								<button :disabled="!unsettedValues"
+										@click="calculateBySavage()"
 										class="btn btn-primary btn-lg btn-block">
 									Savage
 								</button>
@@ -116,13 +119,40 @@
 								<h6 style="text-align: center;">Ingresa el <strong>α</strong>: 0.</h6>
 								<input v-model="alpha" type="number" min="0" class="form-control">
 								<button onclick="this.parentElement.style.display='none';" 
-									@click="calculateByHurwicz"
+									@click="calculateByHurwicz()"
 									style="center-align" 
 									class="btn btn-warning btn-sm btnAssignAlpha">
 									Aceptar
 								</button>
 							</div>
 						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- RESULTS -->
+		<div class="row" style="margin-bottom:75px;">
+			<div class="col-md-6">
+				<div class="row">
+					<div class="col-md-12">
+						<h3 v-if="decision">Alternativa a elegir:</h3>
+						<ul>
+							<li v-if="decision">
+								<h4>{{decision}}</h4>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 offset-1">
+				<div class="row">
+					<div class="col-md-12">
+						<h3 v-if="postura">Postura utilizada:</h3>
+						<ul>
+							<li v-if="postura">
+								<h4>{{postura}}</h4>
+							</li>
+						</ul>
 					</div>
 				</div>
 			</div>
@@ -150,6 +180,15 @@
 		computed: {
             Id() {
                 return this.$route.params.id;
+            },
+            unsettedValues() {
+            	///////////////////////////////////////////////////// L
+            	///////////////////////////////////////////////////// E
+            	///////////////////////////////////////////////////// E
+            	//No se que valores son los de los inputs, fijate si podes arreglar esto
+            	if((this.fields && this.resultados) != []) {
+            		return this.fields && this.resultados;
+            	}
             }/*,
             noAllTheFields(){
             	let isField = true;
@@ -167,7 +206,7 @@
 			calculateByOptimist() {
 				this.resultados = [];
 				this.decision = '';
-				//busca el mayor de cada columna
+				//Searchs the bigger value of each column
 				for(let i=0;i<this.situation.alternatives.length;i++){
 					let resultado = this.fields[i][0];
 					for(let j=0;j<this.situation.scenarios.length;j++){
@@ -177,7 +216,7 @@
 					}
 					this.resultados.push(resultado); 
 				}
-				//busca el mayor de los mayores
+				//Searchs the bigger from the biggers
 				let resultado = this.resultados[0];
 				for(let i=0;i<this.resultados.length;i++){
 					if(this.resultados[i]>resultado){
@@ -191,7 +230,7 @@
 			calculateByPesimist() {
 				this.resultados = [];
 				this.decision = '';
-				//busca el menor de cada columna
+				//Searchs the lover value of each column
 				for(let i=0;i<this.situation.alternatives.length;i++){
 					let resultado = this.fields[i][0];
 					for(let j=0;j<this.situation.scenarios.length;j++){
@@ -201,7 +240,7 @@
 					}
 					this.resultados.push(resultado); 
 				}
-				//busca el mayor de los menores
+				//Searchs the bigger from de lowers
 				let resultado = this.resultados[0];
 				for(let i=0;i<this.resultados.length;i++){
 					if(this.resultados[i]>resultado){
@@ -223,18 +262,18 @@
 							mayor = this.fields[i][j];
 						}
 					}
-					//busca el menor de cada columna
+					//Searchs the lower of each column
 					let menor = this.fields[i][0];
 					for(let j=0;j<this.situation.scenarios.length;j++){
 						if(this.fields[i][j]<menor){
 							menor = this.fields[i][j];
 						}
 					}
-					//hace la cuenta con el apha
+					//It does alpha calculate
 					let valor = this.alpha/10*mayor + (1-this.alpha/10)*menor;
 					this.resultados.push(valor); 
 				}
-				//busca el mayor de los resultados
+				//Searchs the bigger of the results
 				let resultado = this.resultados[0];
 				for(let i=0;i<this.resultados.length;i++){
 					if(this.resultados[i]>resultado){
@@ -249,7 +288,7 @@
 			calculateByLaplace() {
 				this.resultados = [];
 				this.decision = '';
-				//sacar promedio de cada columna
+				//Average of each column
 				let total = 0;
 				let cant = 0;
 				let promedio = 0;
@@ -264,7 +303,7 @@
 					promedio = total/cant;
 					this.resultados.push(promedio);
 				}
-				//busca el mayor de los resultados
+				//Searchs the bigger of the results
 				let resultado = this.resultados[0];
 				for(let i=0;i<this.resultados.length;i++){
 					if(this.resultados[i]>resultado){
@@ -278,7 +317,7 @@
 			calculateBySavage() {
 				this.resultados = [];
 				this.decision = '';
-				//generar nueva tabla con valores restados
+				//It generates a new table with values substracted
 
 				let newFields = Object.assign(this.fields, newFields);
 				// let newFields = this.fields.concat([]);  NI ESTA NI LA LINEA DE ARRIBA FUNCIONAN PARA QUE NO SE CAMBIEN LOS VALORES DE PANTALLA, NO SE POR QUE
@@ -290,12 +329,12 @@
 							mayor = this.fields[i][j];
 						}
 					}
-					//reemplaza valores
+					//Replace values
 					for(let j=0;j<this.situation.scenarios.length;j++){
 						newFields[i][j] = mayor - newFields[i][j];
 					}
 				}
-				//buscar mayores de cada columna en tabla nueva
+				//It searchs the bigger values of the new table
 				for(let i=0;i<this.situation.alternatives.length;i++){
 					let resultado = newFields[i][0];
 					for(let j=0;j<this.situation.scenarios.length;j++){
@@ -305,7 +344,7 @@
 					}
 					this.resultados.push(resultado); 
 				}
-				//buscar el menor de los mayores
+				//Searchs the lower from the biggers
 				let resultado = this.resultados[0];
 				for(let i=0;i<this.resultados.length;i++){
 					if(this.resultados[i]<resultado){

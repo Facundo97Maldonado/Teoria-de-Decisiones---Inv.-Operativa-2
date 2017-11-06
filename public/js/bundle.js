@@ -15004,7 +15004,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "\n.trow {\n\tpadding-left: -300px;\n}\n.situationsTitle {\n\tmargin-top: 50px;\n\ttext-align: center;\n\tmargin-bottom: 25px;\n}\n.noSituations {\n\ttext-align: center;\n\tmargin-top: 200px;\n}\n.tableRow {\n\tmargin-top: 50px;\n}\n.options {\n\ttext-align: center;\n\tmargin-bottom: 30px;\n}\n.selectAnOption {\n\tmargin-bottom: 50px;\n}\n.forHurwicz {\n\tmargin-top: -45px;\n}\n.btnAssignAlpha {\n\tmargin-top: 10px;\n\tmargin-left: 30px;\n}\n", ""]);
+exports.push([module.i, "\n.toCenter {\n\tmargin-left: 60px;\n}\n.trow {\n\tpadding-left: -300px;\n}\n.situationsTitle {\n\tmargin-top: 50px;\n\ttext-align: center;\n\tmargin-bottom: 25px;\n}\n.noSituations {\n\ttext-align: center;\n\tmargin-top: 200px;\n}\n.tableRow {\n\tmargin-top: 50px;\n}\n.options {\n\ttext-align: center;\n\tmargin-bottom: 30px;\n}\n.selectAnOption {\n\tmargin-bottom: 50px;\n}\n.forHurwicz {\n\tmargin-top: -45px;\n}\n.btnAssignAlpha {\n\tmargin-top: 10px;\n\tmargin-left: 30px;\n}\n", ""]);
 
 // exports
 
@@ -15033,10 +15033,45 @@ exports.default = {
 			situations: []
 		};
 	},
+
+	methods: {
+		//Not working, dont know why, need review
+		removeSituation: function removeSituation(sit) {
+			var index = this.situations.indexOf(sit);
+			console.log(index);
+			this.situations.splice(index, 1);
+			console.log(this.situations + " after delete");
+		}
+	},
 	created: function created() {
 		this.situations = _situationService2.default.getSituations();
 	}
 }; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -15099,95 +15134,144 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container" },
-    [
-      _vm.situations.length
-        ? _c("div", { staticClass: "row" }, [_vm._m(0)])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm._l(_vm.situations, function(sit, i) {
-        return _c("div", { staticClass: "row tableRow" }, [
-          _c(
-            "div",
-            { staticClass: "col-md-10 offset-1" },
-            [
-              !_vm.situations.length
-                ? _c("h2", { staticClass: "noSituations" }, [
-                    _vm._v("\n\t\t\t\t\tNo posee situaciones aun\n\t\t\t\t")
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _c("div", { staticClass: "row showFeatures" }, [
-                _c("div", { staticClass: "col-md-5" }, [
+  return _c("div", { staticClass: "container" }, [
+    !_vm.situations.length
+      ? _c("h2", { staticClass: "noSituations" }, [
+          _vm._v("\n\t\tNo posee situaciones aun\n\t")
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.situations.length
+      ? _c("div", { staticClass: "row" }, [_vm._m(0)])
+      : _vm._e(),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "col-md-12" },
+        _vm._l(_vm.situations, function(sit, i) {
+          return _c("div", { staticClass: "row tableRow" }, [
+            _c("div", { staticClass: "col-md-12" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-8 offset-2" }, [
                   _c("div", { staticClass: "row" }, [
                     _c("div", { staticClass: "col-md-12" }, [
-                      _c("h3", { staticClass: "tittle" }, [
-                        _vm._v(_vm._s(sit.tittle))
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-md-12" }, [
-                      _c("h6", [_vm._v("Alternativas:")]),
-                      _vm._v(" "),
                       _c(
-                        "ul",
-                        _vm._l(sit.alternatives, function(alternative) {
-                          return _c("li", [
-                            _vm._v(
-                              "\n\t\t\t\t\t\t\t\t\t\t" +
-                                _vm._s(alternative) +
-                                "\n\t\t\t\t\t\t\t\t\t"
-                            )
-                          ])
-                        })
-                      )
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-5 offset-2" }, [
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-md-12" }, [
-                      _c("h6", [_vm._v("Escenarios:")]),
-                      _vm._v(" "),
-                      _c(
-                        "ul",
-                        _vm._l(sit.scenarios, function(scenario) {
-                          return _c("li", [
-                            _vm._v(
-                              "\n\t\t\t\t\t\t\t\t\t\t" +
-                                _vm._s(scenario) +
-                                "\n\t\t\t\t\t\t\t\t\t"
-                            )
-                          ])
-                        })
+                        "h4",
+                        {
+                          staticStyle: {
+                            "text-align": "center",
+                            "margin-bottom": "50px"
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n\t\t\t\t\t\t\t\t\t\tSituacion: " +
+                              _vm._s(sit.tittle) +
+                              "\n\t\t\t\t\t\t\t\t\t"
+                          )
+                        ]
                       )
                     ])
                   ])
                 ])
               ]),
               _vm._v(" "),
-              _c(
-                "router-link",
-                {
-                  attrs: {
-                    to: { name: "oneSituation", params: { id: sit.id } }
-                  }
-                },
-                [_c("p", [_vm._v("Ir a la situacion")])]
-              )
-            ],
-            1
-          )
-        ])
-      })
-    ],
-    2
-  )
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-10 offset-1" }, [
+                  _c("div", { staticClass: "row showFeatures" }, [
+                    _c("div", { staticClass: "col-md-5 offset-1" }, [
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-md-12" }, [
+                          _c("h6", [_vm._v("Alternativas:")]),
+                          _vm._v(" "),
+                          _c(
+                            "ul",
+                            _vm._l(sit.alternatives, function(alternative) {
+                              return _c("li", [
+                                _vm._v(
+                                  "\n\t\t\t\t\t\t\t\t\t\t\t\t\t" +
+                                    _vm._s(alternative) +
+                                    "\n\t\t\t\t\t\t\t\t\t\t\t\t"
+                                )
+                              ])
+                            })
+                          )
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-5 offset-1" }, [
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-md-12" }, [
+                          _c("h6", [_vm._v("Escenarios:")]),
+                          _vm._v(" "),
+                          _c(
+                            "ul",
+                            _vm._l(sit.scenarios, function(scenario) {
+                              return _c("li", [
+                                _vm._v(
+                                  "\n\t\t\t\t\t\t\t\t\t\t\t\t\t" +
+                                    _vm._s(scenario) +
+                                    "\n\t\t\t\t\t\t\t\t\t\t\t\t"
+                                )
+                              ])
+                            })
+                          )
+                        ])
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c(
+                  "div",
+                  { staticClass: "col-md-4 offset-2" },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        attrs: {
+                          to: { name: "oneSituation", params: { id: sit.id } }
+                        }
+                      },
+                      [
+                        _c("button", { staticClass: "btn btn-info toCenter" }, [
+                          _vm._v("Ir a la situacion")
+                        ])
+                      ]
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-4" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger toCenter",
+                      on: {
+                        click: function($event) {
+                          _vm.removeSituation(sit)
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n\t\t\t\t\t\t\t\tEliminar situacion\n\t\t\t\t\t\t\t"
+                      )
+                    ]
+                  )
+                ])
+              ])
+            ])
+          ])
+        })
+      )
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
@@ -15196,7 +15280,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-md-12" }, [
       _c("h3", { staticClass: "situationsTitle" }, [
-        _vm._v("\n\t\t\t\t\tSituaciones creadas\n\t\t\t\t")
+        _vm._v("\n\t\t\t\tSituaciones creadas\n\t\t\t")
       ])
     ])
   }
@@ -15373,6 +15457,7 @@ exports.default = {
 		}
 	}
 }; //
+//
 //
 //
 //
@@ -15974,47 +16059,6 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 exports.default = {
 	name: 'fdAbout'
@@ -16136,78 +16180,20 @@ var staticRenderFns = [
                     _c("strong", [_vm._v("situacion")]),
                     _vm._v(" correspondiente \n\t\t\t\t\t\t\t")
                   ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-6 subList" }, [
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-md-12" }, [
-                      _c("h5", { staticClass: "subTitle" }, [
-                        _vm._v(
-                          "\n\t\t\t\t\t\t\t\t\t\tSin datos\n\t\t\t\t\t\t\t\t\t"
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("ul", { staticClass: "list" }, [
-                        _c("li", { staticClass: "element" }, [
-                          _c("h6", [
-                            _vm._v("\n\t\t\t\t\t\t\t\t\t\t\t\tPresionar "),
-                            _c("strong", [_vm._v("ver situacion")])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("li", { staticClass: "element" }, [
-                          _c("h6", [
-                            _c("strong", [_vm._v("Agregar")]),
-                            _vm._v(
-                              " los datos correspondientes\n\t\t\t\t\t\t\t\t\t\t\t"
-                            )
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("li", { staticClass: "element" }, [
-                          _c("h6", [
-                            _vm._v("\n\t\t\t\t\t\t\t\t\t\t\t\tSeleccionar "),
-                            _c("strong", [_vm._v("postura")]),
-                            _vm._v(
-                              " de \n\t\t\t\t\t\t\t\t\t\t\t\tla decision a tomar\n\t\t\t\t\t\t\t\t\t\t\t"
-                            )
-                          ])
-                        ])
-                      ])
-                    ])
+                ]),
+                _vm._v(" "),
+                _c("li", { staticClass: "element" }, [
+                  _c("h6", [
+                    _vm._v("\n\t\t\t\t\t\t\t\tPresionar "),
+                    _c("strong", [_vm._v("ver situacion")])
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-md-6" }, [
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-md-12" }, [
-                      _c("h5", { staticClass: "subTitle" }, [
-                        _vm._v(
-                          "\n\t\t\t\t\t\t\t\t\t\tCon datos\n\t\t\t\t\t\t\t\t\t"
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("ul", { staticClass: "list" }, [
-                        _c("li", { staticClass: "element" }, [
-                          _c("h6", [
-                            _vm._v("\n\t\t\t\t\t\t\t\t\t\t\t\tPresionar "),
-                            _c("strong", [_vm._v("ver situacion")])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("li", { staticClass: "element" }, [
-                          _c("h6", [
-                            _vm._v("\n\t\t\t\t\t\t\t\t\t\t\t\tSeleccionar "),
-                            _c("strong", [_vm._v("postura")]),
-                            _vm._v(
-                              " de\n\t\t\t\t\t\t\t\t\t\t\t\tla decision a tomar\n\t\t\t\t\t\t\t\t\t\t\t"
-                            )
-                          ])
-                        ])
-                      ])
-                    ])
+                _c("li", { staticClass: "element" }, [
+                  _c("h6", [
+                    _vm._v("\n\t\t\t\t\t\t\t\tSeleccionar "),
+                    _c("strong", [_vm._v("postura")]),
+                    _vm._v(" de la decision a tomar\n\t\t\t\t\t\t\t")
                   ])
                 ])
               ])
@@ -16360,6 +16346,15 @@ exports.default = {
 	computed: {
 		Id: function Id() {
 			return this.$route.params.id;
+		},
+		unsettedValues: function unsettedValues() {
+			///////////////////////////////////////////////////// L
+			///////////////////////////////////////////////////// E
+			///////////////////////////////////////////////////// E
+			//No se que valores son los de los inputs, fijate si podes arreglar esto
+			if ((this.fields && this.resultados) != []) {
+				return this.fields && this.resultados;
+			}
 		} /*,
     noAllTheFields(){
     let isField = true;
@@ -16378,7 +16373,7 @@ exports.default = {
 		calculateByOptimist: function calculateByOptimist() {
 			this.resultados = [];
 			this.decision = '';
-			//busca el mayor de cada columna
+			//Searchs the bigger value of each column
 			for (var i = 0; i < this.situation.alternatives.length; i++) {
 				var _resultado = this.fields[i][0];
 				for (var j = 0; j < this.situation.scenarios.length; j++) {
@@ -16388,7 +16383,7 @@ exports.default = {
 				}
 				this.resultados.push(_resultado);
 			}
-			//busca el mayor de los mayores
+			//Searchs the bigger from the biggers
 			var resultado = this.resultados[0];
 			for (var _i = 0; _i < this.resultados.length; _i++) {
 				if (this.resultados[_i] > resultado) {
@@ -16402,7 +16397,7 @@ exports.default = {
 		calculateByPesimist: function calculateByPesimist() {
 			this.resultados = [];
 			this.decision = '';
-			//busca el menor de cada columna
+			//Searchs the lover value of each column
 			for (var i = 0; i < this.situation.alternatives.length; i++) {
 				var _resultado2 = this.fields[i][0];
 				for (var j = 0; j < this.situation.scenarios.length; j++) {
@@ -16412,7 +16407,7 @@ exports.default = {
 				}
 				this.resultados.push(_resultado2);
 			}
-			//busca el mayor de los menores
+			//Searchs the bigger from de lowers
 			var resultado = this.resultados[0];
 			for (var _i2 = 0; _i2 < this.resultados.length; _i2++) {
 				if (this.resultados[_i2] > resultado) {
@@ -16434,18 +16429,18 @@ exports.default = {
 						mayor = this.fields[i][j];
 					}
 				}
-				//busca el menor de cada columna
+				//Searchs the lower of each column
 				var menor = this.fields[i][0];
 				for (var _j = 0; _j < this.situation.scenarios.length; _j++) {
 					if (this.fields[i][_j] < menor) {
 						menor = this.fields[i][_j];
 					}
 				}
-				//hace la cuenta con el apha
+				//It does alpha calculate
 				var valor = this.alpha / 10 * mayor + (1 - this.alpha / 10) * menor;
 				this.resultados.push(valor);
 			}
-			//busca el mayor de los resultados
+			//Searchs the bigger of the results
 			var resultado = this.resultados[0];
 			for (var _i3 = 0; _i3 < this.resultados.length; _i3++) {
 				if (this.resultados[_i3] > resultado) {
@@ -16459,7 +16454,7 @@ exports.default = {
 		calculateByLaplace: function calculateByLaplace() {
 			this.resultados = [];
 			this.decision = '';
-			//sacar promedio de cada columna
+			//Average of each column
 			var total = 0;
 			var cant = 0;
 			var promedio = 0;
@@ -16474,7 +16469,7 @@ exports.default = {
 				promedio = total / cant;
 				this.resultados.push(promedio);
 			}
-			//busca el mayor de los resultados
+			//Searchs the bigger of the results
 			var resultado = this.resultados[0];
 			for (var _i4 = 0; _i4 < this.resultados.length; _i4++) {
 				if (this.resultados[_i4] > resultado) {
@@ -16488,7 +16483,7 @@ exports.default = {
 		calculateBySavage: function calculateBySavage() {
 			this.resultados = [];
 			this.decision = '';
-			//generar nueva tabla con valores restados
+			//It generates a new table with values substracted
 
 			var newFields = Object.assign(this.fields, newFields);
 			// let newFields = this.fields.concat([]);  NI ESTA NI LA LINEA DE ARRIBA FUNCIONAN PARA QUE NO SE CAMBIEN LOS VALORES DE PANTALLA, NO SE POR QUE
@@ -16500,12 +16495,12 @@ exports.default = {
 						mayor = this.fields[i][j];
 					}
 				}
-				//reemplaza valores
+				//Replace values
 				for (var _j2 = 0; _j2 < this.situation.scenarios.length; _j2++) {
 					newFields[i][_j2] = mayor - newFields[i][_j2];
 				}
 			}
-			//buscar mayores de cada columna en tabla nueva
+			//It searchs the bigger values of the new table
 			for (var _i5 = 0; _i5 < this.situation.alternatives.length; _i5++) {
 				var _resultado3 = newFields[_i5][0];
 				for (var _j3 = 0; _j3 < this.situation.scenarios.length; _j3++) {
@@ -16515,7 +16510,7 @@ exports.default = {
 				}
 				this.resultados.push(_resultado3);
 			}
-			//buscar el menor de los mayores
+			//Searchs the lower from the biggers
 			var resultado = this.resultados[0];
 			for (var _i6 = 0; _i6 < this.resultados.length; _i6++) {
 				if (this.resultados[_i6] < resultado) {
@@ -16673,6 +16668,36 @@ exports.default = {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /***/ }),
 /* 47 */
@@ -16694,111 +16719,98 @@ var render = function() {
       _c("div", { staticClass: "col-md-10 offset-1" }, [
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-md-12" }, [
-            _c(
-              "table",
-              { staticClass: "table table-bordered table-responsive" },
-              [
-                _c(
-                  "thead",
-                  [
-                    _c(
+            _c("table", { staticClass: "table table-responsive" }, [
+              _c(
+                "thead",
+                [
+                  _c(
+                    "tr",
+                    { staticClass: "trow" },
+                    [
+                      _vm._m(0),
+                      _vm._v(" "),
+                      _vm._l(_vm.situation.alternatives, function(alt) {
+                        return _c("th", { attrs: { scope: "col" } }, [
+                          _vm._v(
+                            "\n\t\t\t\t\t\t\t\t\t" +
+                              _vm._s(alt) +
+                              "\n\t\t\t\t\t\t\t\t"
+                          )
+                        ])
+                      })
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.situation.scenarios, function(scen, y) {
+                    return _c(
                       "tr",
-                      { staticClass: "trow" },
                       [
-                        _vm._m(0),
+                        _c("td", { attrs: { scope: "row" } }, [
+                          _vm._v(
+                            "\n\t\t\t\t\t\t\t\t\t" +
+                              _vm._s(scen) +
+                              "\n\t\t\t\t\t\t\t\t"
+                          )
+                        ]),
                         _vm._v(" "),
-                        _vm._l(_vm.situation.alternatives, function(alt) {
-                          return _c("th", { attrs: { scope: "col" } }, [
-                            _vm._v(
-                              "\n\t\t\t\t\t\t\t\t\t" +
-                                _vm._s(alt) +
-                                "\n\t\t\t\t\t\t\t\t"
-                            )
+                        _vm._l(_vm.situation.alternatives, function(alt, x) {
+                          return _c("td", [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.fields[x][y],
+                                  expression: "fields[x][y]"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { type: "number", name: "" },
+                              domProps: { value: _vm.fields[x][y] },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.fields[x],
+                                    y,
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
                           ])
                         })
                       ],
                       2
-                    ),
-                    _vm._v(" "),
-                    _vm._l(_vm.situation.scenarios, function(scen, y) {
-                      return _c(
+                    )
+                  }),
+                  _vm._v(" "),
+                  _vm.calcular
+                    ? _c(
                         "tr",
                         [
-                          _c("td", { attrs: { scope: "row" } }, [
-                            _vm._v(
-                              "\n\t\t\t\t\t\t\t\t\t" +
-                                _vm._s(scen) +
-                                "\n\t\t\t\t\t\t\t\t"
-                            )
-                          ]),
+                          _c("td", [_vm._v("Resultados:")]),
                           _vm._v(" "),
-                          _vm._l(_vm.situation.alternatives, function(alt, x) {
+                          _vm._l(_vm.resultados, function(r) {
                             return _c("td", [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.fields[x][y],
-                                    expression: "fields[x][y]"
-                                  }
-                                ],
-                                attrs: { type: "number", name: "" },
-                                domProps: { value: _vm.fields[x][y] },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(
-                                      _vm.fields[x],
-                                      y,
-                                      $event.target.value
-                                    )
-                                  }
-                                }
-                              })
+                              _vm._v(
+                                "\n\t\t\t\t\t\t\t\t\t" +
+                                  _vm._s(r) +
+                                  "\n\t\t\t\t\t\t\t\t"
+                              )
                             ])
                           })
                         ],
                         2
                       )
-                    }),
-                    _vm._v(" "),
-                    _vm.calcular
-                      ? _c(
-                          "tr",
-                          [
-                            _c("td", [_vm._v("Resultados:")]),
-                            _vm._v(" "),
-                            _vm._l(_vm.resultados, function(r) {
-                              return _c("td", [
-                                _vm._v(
-                                  "\n\t\t\t\t\t\t\t\t\t" +
-                                    _vm._s(r) +
-                                    "\n\t\t\t\t\t\t\t\t"
-                                )
-                              ])
-                            })
-                          ],
-                          2
-                        )
-                      : _vm._e()
-                  ],
-                  2
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _vm.decision
-              ? _c("h3", [
-                  _vm._v("Alternativa a elegir: " + _vm._s(_vm.decision))
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.postura
-              ? _c("h3", [_vm._v("Postura utilizada: " + _vm._s(_vm.postura))])
-              : _vm._e()
+                    : _vm._e()
+                ],
+                2
+              )
+            ])
           ])
         ]),
         _vm._v(" "),
@@ -16812,6 +16824,7 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-success btn-lg btn-block",
+                    attrs: { disabled: !_vm.unsettedValues },
                     on: {
                       click: function($event) {
                         _vm.calculateByOptimist()
@@ -16831,7 +16844,12 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-danger btn-lg btn-block",
-                    on: { click: _vm.calculateByPesimist }
+                    attrs: { disabled: !_vm.unsettedValues },
+                    on: {
+                      click: function($event) {
+                        _vm.calculateByPesimist()
+                      }
+                    }
                   },
                   [_vm._v("\n\t\t\t\t\t\t\t\tPesimista\n\t\t\t\t\t\t\t")]
                 )
@@ -16839,7 +16857,24 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm._m(2),
+          _c("div", { staticClass: "col-md-2" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-12" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-warning btn-lg btn-block",
+                    attrs: {
+                      disabled: !_vm.unsettedValues,
+                      onclick:
+                        "document.getElementById('forHurwicz').style.display='block';"
+                    }
+                  },
+                  [_vm._v("\n\t\t\t\t\t\t\t\tHurwicz\n\t\t\t\t\t\t\t")]
+                )
+              ])
+            ])
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-2" }, [
             _c("div", { staticClass: "row" }, [
@@ -16848,7 +16883,12 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-info btn-lg btn-block",
-                    on: { click: _vm.calculateByLaplace }
+                    attrs: { disabled: !_vm.unsettedValues },
+                    on: {
+                      click: function($event) {
+                        _vm.calculateByLaplace()
+                      }
+                    }
                   },
                   [_vm._v("\n\t\t\t\t\t\t\t\tLaplace\n\t\t\t\t\t\t\t")]
                 )
@@ -16863,7 +16903,12 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-primary btn-lg btn-block",
-                    on: { click: _vm.calculateBySavage }
+                    attrs: { disabled: !_vm.unsettedValues },
+                    on: {
+                      click: function($event) {
+                        _vm.calculateBySavage()
+                      }
+                    }
                   },
                   [_vm._v("\n\t\t\t\t\t\t\t\tSavage\n\t\t\t\t\t\t\t")]
                 )
@@ -16890,7 +16935,7 @@ var render = function() {
             _c("div", { staticClass: "col-md-2 offset-5" }, [
               _c("div", { staticClass: "row" }, [
                 _c("div", { staticClass: "col-md-12" }, [
-                  _vm._m(3),
+                  _vm._m(2),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -16922,7 +16967,11 @@ var render = function() {
                       attrs: {
                         onclick: "this.parentElement.style.display='none';"
                       },
-                      on: { click: _vm.calculateByHurwicz }
+                      on: {
+                        click: function($event) {
+                          _vm.calculateByHurwicz()
+                        }
+                      }
                     },
                     [_vm._v("\n\t\t\t\t\t\t\t\tAceptar\n\t\t\t\t\t\t\t")]
                   )
@@ -16932,7 +16981,43 @@ var render = function() {
           ]
         )
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "row", staticStyle: { "margin-bottom": "75px" } },
+      [
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-12" }, [
+              _vm.decision
+                ? _c("h3", [_vm._v("Alternativa a elegir:")])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("ul", [
+                _vm.decision
+                  ? _c("li", [_c("h4", [_vm._v(_vm._s(_vm.decision))])])
+                  : _vm._e()
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-4 offset-1" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-12" }, [
+              _vm.postura ? _c("h3", [_vm._v("Postura utilizada:")]) : _vm._e(),
+              _vm._v(" "),
+              _c("ul", [
+                _vm.postura
+                  ? _c("li", [_c("h4", [_vm._v(_vm._s(_vm.postura))])])
+                  : _vm._e()
+              ])
+            ])
+          ])
+        ])
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -16952,29 +17037,7 @@ var staticRenderFns = [
       _c("div", { staticClass: "col-md-12" }, [
         _c("h4", { staticClass: "options" }, [
           _vm._v(
-            "\n\t\t\t\t\t\tSelecciona tu postura para tomar una decision\n\t\t\t\t\t"
-          )
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-2" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-12" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-warning btn-lg btn-block",
-              attrs: {
-                onclick:
-                  "document.getElementById('forHurwicz').style.display='block';"
-              }
-            },
-            [_vm._v("\n\t\t\t\t\t\t\t\tHurwicz\n\t\t\t\t\t\t\t")]
+            "\n\t\t\t\t\t\tSelecciona tu postura para tomar una decision:\n\t\t\t\t\t"
           )
         ])
       ])

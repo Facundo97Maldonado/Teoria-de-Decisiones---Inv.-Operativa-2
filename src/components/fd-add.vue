@@ -46,7 +46,7 @@
 				</div>
 				<div class="row">
 					<div class="col-md-12">
-						<h6>Escenarios agregados agregadas:</h6>
+						<h6>Escenarios agregados:</h6>
 						<p class="noContent" v-if="!scenarios.length">
 							No has agregado escenarios aun
 						</p>
@@ -87,7 +87,8 @@
 			        	<button type="button" class="btn btn-secondary" data-dismiss="modal">
 			        		Cancelar
 			        	</button>
-			        	<button :disabled="!noTittle" type="button" class="btn btn-primary" data-dismiss="modal" 
+			        	<button :disabled="!noTittle" type="button" class="btn btn-primary" 
+			        			data-dismiss="modal" 
 			        			@click="addSituation()">Si, estoy seguro</button>
 			      	</div>
 			    </div>
