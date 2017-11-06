@@ -87,12 +87,10 @@
 			}
 		},
 		methods: {
-			//Not working, dont know why, need review
 			removeSituation(sit) {
 				const index = this.situations.indexOf(sit);
-				console.log(index);
 				this.situations.splice(index, 1);
-				console.log(this.situations + " after delete");
+				situationService.setSituations(this.situations);
 			}
 		},
 		created(){

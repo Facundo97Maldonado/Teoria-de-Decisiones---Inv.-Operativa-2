@@ -679,6 +679,9 @@ exports.default = {
 	getSituations: function getSituations() {
 		return JSON.parse(localStorage.getItem('situations')) || [];
 	},
+	setSituations: function setSituations(situations) {
+		localStorage.setItem('situations', JSON.stringify(situations));
+	},
 	addSituation: function addSituation(arr_alternatives, arr_scenarios, tit) {
 		var situations = this.getSituations();
 		situations.push({ alternatives: arr_alternatives, scenarios: arr_scenarios, tittle: tit, id: this.getLastId() + 1 });
@@ -15035,12 +15038,10 @@ exports.default = {
 	},
 
 	methods: {
-		//Not working, dont know why, need review
 		removeSituation: function removeSituation(sit) {
 			var index = this.situations.indexOf(sit);
-			console.log(index);
 			this.situations.splice(index, 1);
-			console.log(this.situations + " after delete");
+			_situationService2.default.setSituations(this.situations);
 		}
 	},
 	created: function created() {
@@ -15687,7 +15688,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-md-12" }, [
-            _c("h6", [_vm._v("Escenarios agregados agregadas:")]),
+            _c("h6", [_vm._v("Escenarios agregados:")]),
             _vm._v(" "),
             !_vm.scenarios.length
               ? _c("p", { staticClass: "noContent" }, [
@@ -16371,6 +16372,7 @@ exports.default = {
 	},
 	methods: {
 		calculateByOptimist: function calculateByOptimist() {
+			this.parser();
 			this.resultados = [];
 			this.decision = '';
 			//Searchs the bigger value of each column
@@ -16395,6 +16397,7 @@ exports.default = {
 			this.decision = this.situation.alternatives[this.resultados.indexOf(resultado)];
 		},
 		calculateByPesimist: function calculateByPesimist() {
+			this.parser();
 			this.resultados = [];
 			this.decision = '';
 			//Searchs the lover value of each column
@@ -16419,6 +16422,7 @@ exports.default = {
 			this.decision = this.situation.alternatives[this.resultados.indexOf(resultado)];
 		},
 		calculateByHurwicz: function calculateByHurwicz() {
+			this.parser();
 			this.resultados = [];
 			this.decision = '';
 			for (var i = 0; i < this.situation.alternatives.length; i++) {
@@ -16452,6 +16456,7 @@ exports.default = {
 			this.decision = this.situation.alternatives[this.resultados.indexOf(resultado)];
 		},
 		calculateByLaplace: function calculateByLaplace() {
+			this.parser();
 			this.resultados = [];
 			this.decision = '';
 			//Average of each column
@@ -16467,6 +16472,9 @@ exports.default = {
 					cant = cant + 1;
 				}
 				promedio = total / cant;
+				console.log(total);
+				console.log(cant);
+				console.log(promedio);
 				this.resultados.push(promedio);
 			}
 			//Searchs the bigger of the results
@@ -16481,6 +16489,7 @@ exports.default = {
 			this.decision = this.situation.alternatives[this.resultados.indexOf(resultado)];
 		},
 		calculateBySavage: function calculateBySavage() {
+			this.parser();
 			this.resultados = [];
 			this.decision = '';
 			//It generates a new table with values substracted
@@ -16520,6 +16529,13 @@ exports.default = {
 			this.postura = "Savage";
 			this.calcular = true;
 			this.decision = this.situation.alternatives[this.resultados.indexOf(resultado)];
+		},
+		parser: function parser() {
+			for (var i = 0; i < this.situation.alternatives.length; i++) {
+				for (var j = 0; j < this.situation.scenarios.length; j++) {
+					this.fields[i][j] = parseInt(this.fields[i][j]);
+				}
+			}
 		},
 		Create2DArray: function Create2DArray(rows) {
 			for (var i = 0; i < rows; i++) {

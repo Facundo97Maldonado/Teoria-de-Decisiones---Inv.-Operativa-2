@@ -204,6 +204,7 @@
         },
 		methods: {
 			calculateByOptimist() {
+				this.parser();
 				this.resultados = [];
 				this.decision = '';
 				//Searchs the bigger value of each column
@@ -228,6 +229,7 @@
 				this.decision = this.situation.alternatives[this.resultados.indexOf(resultado)];
 			},
 			calculateByPesimist() {
+				this.parser();
 				this.resultados = [];
 				this.decision = '';
 				//Searchs the lover value of each column
@@ -252,6 +254,7 @@
 				this.decision = this.situation.alternatives[this.resultados.indexOf(resultado)];
 			},
 			calculateByHurwicz() {
+				this.parser();
 				this.resultados = [];
 				this.decision = '';
 				for(let i=0;i<this.situation.alternatives.length;i++){
@@ -286,6 +289,7 @@
 
 			},
 			calculateByLaplace() {
+				this.parser();
 				this.resultados = [];
 				this.decision = '';
 				//Average of each column
@@ -301,6 +305,9 @@
 						cant = cant + 1;
 					}
 					promedio = total/cant;
+					console.log(total);
+					console.log(cant);
+					console.log(promedio);
 					this.resultados.push(promedio);
 				}
 				//Searchs the bigger of the results
@@ -315,6 +322,7 @@
 				this.decision = this.situation.alternatives[this.resultados.indexOf(resultado)];
 			},
 			calculateBySavage() {
+				this.parser();
 				this.resultados = [];
 				this.decision = '';
 				//It generates a new table with values substracted
@@ -354,6 +362,13 @@
 				this.postura = "Savage";
 				this.calcular = true;
 				this.decision = this.situation.alternatives[this.resultados.indexOf(resultado)];
+			},
+			parser(){
+				for(let i=0; i<this.situation.alternatives.length;i++){
+					for(let j=0; j<this.situation.scenarios.length;j++){
+						this.fields[i][j] = parseInt(this.fields[i][j]);
+					}
+				}
 			},
 			Create2DArray(rows) {
 			for (let i=0;i<rows;i++) {
