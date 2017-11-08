@@ -181,26 +181,17 @@
             Id() {
                 return this.$route.params.id;
             },
-            unsettedValues() {
-            	///////////////////////////////////////////////////// L
-            	///////////////////////////////////////////////////// E
-            	///////////////////////////////////////////////////// E
-            	//No se que valores son los de los inputs, fijate si podes arreglar esto
-            	if((this.fields && this.resultados) != []) {
-            		return this.fields && this.resultados;
-            	}
-            }/*
-            noAllTheFields(){
-            	let isField = true;
+            unsettedValues(){
+            	return 3;/*
             	for (let i=0;i<this.situation.alternatives.length;i++){
             		for(let j=0;j<this.situation.scenarios.length;j++){
-            			if(!this.fields[i][j]){
-            				isField = false;
+            			if(this.fields[i][j] === undefined){
+            				return undefined;
             			}
             		}
             	}
-            	return isField;
-            }*/
+            	return true;*/
+            }
         },
 		methods: {
 			calculateByOptimist() {
@@ -324,7 +315,7 @@
 				this.decision = '';
 				//It generates a new table with values substracted
 
-				let newFields = Object.assign(this.fields, newFields);
+				let newFields = this.copy2DArray(this.situation.alternatives.length);
 				// let newFields = this.fields.concat([]);  NI ESTA NI LA LINEA DE ARRIBA FUNCIONAN PARA QUE NO SE CAMBIEN LOS VALORES DE PANTALLA, NO SE POR QUE
 				for(let i=0;i<this.situation.alternatives.length;i++){
 					//busca el mayor de cada columna
@@ -368,9 +359,17 @@
 				}
 			},
 			Create2DArray(rows) {
-			for (let i=0;i<rows;i++) {
-			     this.fields[i] = [];
-			  }
+				for (let i=0;i<rows;i++) {
+				     this.fields[i] = [];
+				  }
+			},
+			copy2DArray(rows){
+				let newFields = [];
+				for (let i=0;i<rows;i++) {
+					newFields[i] = [];
+				    newFields[i].push(...this.fields[i]);
+				  }
+				return newFields;
 			}
 		},
 		watch: {

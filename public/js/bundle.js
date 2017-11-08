@@ -16329,6 +16329,169 @@ var _situationService2 = _interopRequireDefault(_situationService);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } } //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 exports.default = {
 	name: 'fdOneSituation',
 	data: function data() {
@@ -16349,26 +16512,16 @@ exports.default = {
 			return this.$route.params.id;
 		},
 		unsettedValues: function unsettedValues() {
-			///////////////////////////////////////////////////// L
-			///////////////////////////////////////////////////// E
-			///////////////////////////////////////////////////// E
-			//No se que valores son los de los inputs, fijate si podes arreglar esto
-			if ((this.fields && this.resultados) != []) {
-				return this.fields && this.resultados;
-			}
-		} /*
-    noAllTheFields(){
-    let isField = true;
-    for (let i=0;i<this.situation.alternatives.length;i++){
-    	for(let j=0;j<this.situation.scenarios.length;j++){
-    		if(!this.fields[i][j]){
-    			isField = false;
-    		}
-    	}
-    }
-    return isField;
-    }*/
-
+			return 3; /*
+             for (let i=0;i<this.situation.alternatives.length;i++){
+             for(let j=0;j<this.situation.scenarios.length;j++){
+             if(this.fields[i][j] === undefined){
+             return undefined;
+             }
+             }
+             }
+             return true;*/
+		}
 	},
 	methods: {
 		calculateByOptimist: function calculateByOptimist() {
@@ -16491,7 +16644,7 @@ exports.default = {
 			this.decision = '';
 			//It generates a new table with values substracted
 
-			var newFields = Object.assign(this.fields, newFields);
+			var newFields = this.copy2DArray(this.situation.alternatives.length);
 			// let newFields = this.fields.concat([]);  NI ESTA NI LA LINEA DE ARRIBA FUNCIONAN PARA QUE NO SE CAMBIEN LOS VALORES DE PANTALLA, NO SE POR QUE
 			for (var i = 0; i < this.situation.alternatives.length; i++) {
 				//busca el mayor de cada columna
@@ -16538,6 +16691,16 @@ exports.default = {
 			for (var i = 0; i < rows; i++) {
 				this.fields[i] = [];
 			}
+		},
+		copy2DArray: function copy2DArray(rows) {
+			var newFields = [];
+			for (var i = 0; i < rows; i++) {
+				var _newFields$i;
+
+				newFields[i] = [];
+				(_newFields$i = newFields[i]).push.apply(_newFields$i, _toConsumableArray(this.fields[i]));
+			}
+			return newFields;
 		}
 	},
 	watch: {
@@ -16549,168 +16712,7 @@ exports.default = {
 		this.situation = _situationService2.default.getSituationById(this.Id);
 		this.Create2DArray(this.situation.alternatives.length);
 	}
-}; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+};
 
 /***/ }),
 /* 47 */
