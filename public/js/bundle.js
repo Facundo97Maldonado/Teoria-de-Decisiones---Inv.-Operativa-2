@@ -16512,7 +16512,6 @@ exports.default = {
 			return this.$route.params.id;
 		},
 		unsettedValues: function unsettedValues() {
-<<<<<<< HEAD
 			for (var i = 0; i < this.situation.alternatives.length; i++) {
 				for (var j = 0; j < this.situation.scenarios.length; j++) {
 					if (this.fields[i][j] === undefined) {
@@ -16521,18 +16520,6 @@ exports.default = {
 				}
 			}
 			return true;
-=======
-			return 3;
-			/*
-   for (let i=0;i<this.situation.alternatives.length;i++){
-   	for(let j=0;j<this.situation.scenarios.length;j++){
-   		if(this.fields[i][j] === undefined){
-   			return undefined;
-   		}
-   	}
-   }
-   return true;*/
->>>>>>> 2fa7f3a811f311befc96b0795161710eccd246d6
 		}
 	},
 	methods: {
