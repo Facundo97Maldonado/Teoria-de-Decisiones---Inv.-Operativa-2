@@ -43,6 +43,12 @@
 				</div>
 				<div class="row">
 					<div class="col-md-12">
+						<!-- NOT ALL THE VALUES SETTED -->
+						<h1 class="options" v-if="notAllTheValues">INGRESE TODOS LOS VALORES ANTES DE ELEGIR LA POSTURA</h1>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
 						<h4 class="options">
 							Selecciona tu postura para tomar una decision:
 						</h4>
@@ -54,8 +60,7 @@
 					<div class="col-md-2 offset-1">
 						<div class="row">
 							<div class="col-md-12">
-								<button :disabled="!unsettedValues"
-									@click="calculateByOptimist()" 
+								<button	@click="calculateByOptimist()" 
 									class="btn btn-success btn-lg btn-block">
 									Optimista
 								</button>
@@ -66,8 +71,7 @@
 					<div class="col-md-2">
 						<div class="row">
 							<div class="col-md-12">
-								<button :disabled="!unsettedValues"
-									@click="calculateByPesimist()" 
+								<button	@click="calculateByPesimist()" 
 									class="btn btn-danger btn-lg btn-block">
 									Pesimista
 								</button>
@@ -78,8 +82,7 @@
 					<div class="col-md-2">
 						<div class="row">
 							<div class="col-md-12">
-								<button :disabled="!unsettedValues"
-									onclick="document.getElementById('forHurwicz').style.display='block';"
+								<button	@click="openHurwicz"
 									class="btn btn-warning btn-lg btn-block">
 									Hurwicz
 								</button>
@@ -90,8 +93,7 @@
 					<div class="col-md-2">
 						<div class="row">
 							<div class="col-md-12">
-								<button :disabled="!unsettedValues"
-									@click="calculateByLaplace()"
+								<button	@click="calculateByLaplace()"
 									class="btn btn-info btn-lg btn-block">
 									Laplace
 								</button>
@@ -102,8 +104,7 @@
 					<div class="col-md-2">
 						<div class="row">
 							<div class="col-md-12">
-								<button :disabled="!unsettedValues"
-										@click="calculateBySavage()"
+								<button	@click="calculateBySavage()"
 										class="btn btn-primary btn-lg btn-block">
 									Savage
 								</button>
@@ -118,8 +119,7 @@
 							<div class="col-md-12">
 								<h6 style="text-align: center;">Ingresa el <strong>α</strong>: 0.</h6>
 								<input v-model="alpha" type="number" min="0" class="form-control">
-								<button onclick="this.parentElement.style.display='none';" 
-									@click="calculateByHurwicz()"
+								<button @click="calculateByHurwicz()"
 									style="center-align" 
 									class="btn btn-warning btn-sm btnAssignAlpha">
 									Aceptar
@@ -174,28 +174,23 @@
 				calcular: false,
 				resultados: [],
 				decision: '',
-				postura: ''
+				postura: '',
+				notAllTheValues: false
 			}
 		},
 		computed: {
             Id() {
                 return this.$route.params.id;
-            },
-            unsettedValues(){
-            	return 3;/*
-            	for (let i=0;i<this.situation.alternatives.length;i++){
-            		for(let j=0;j<this.situation.scenarios.length;j++){
-            			if(this.fields[i][j] === undefined){
-            				return undefined;
-            			}
-            		}
-            	}
-            	return true;*/
             }
         },
 		methods: {
 			calculateByOptimist() {
+				if(!this.verifyAllTheFields()){
+					this.notAllTheValues = true;
+					return;
+				}
 				this.parser();
+				this.notAllTheValues = false;
 				this.resultados = [];
 				this.decision = '';
 				//Searchs the bigger value of each column
@@ -220,7 +215,12 @@
 				this.decision = this.situation.alternatives[this.resultados.indexOf(resultado)];
 			},
 			calculateByPesimist() {
+				if(!this.verifyAllTheFields()){
+					this.notAllTheValues = true;
+					return;
+				}
 				this.parser();
+				this.notAllTheValues = false;
 				this.resultados = [];
 				this.decision = '';
 				//Searchs the lover value of each column
@@ -245,7 +245,13 @@
 				this.decision = this.situation.alternatives[this.resultados.indexOf(resultado)];
 			},
 			calculateByHurwicz() {
+				if(!this.verifyAllTheFields()){
+					this.notAllTheValues = true;
+					this.alphaAssign = false;
+					return;
+				}
 				this.parser();
+				this.notAllTheValues = false;
 				this.resultados = [];
 				this.decision = '';
 				for(let i=0;i<this.situation.alternatives.length;i++){
@@ -274,13 +280,19 @@
 						resultado = this.resultados[i];
 					}
 				}
+				this.alphaAssign = false;
 				this.postura = "Hurwicz con alpha:"+this.alpha/10;
 				this.calcular = true;
 				this.decision = this.situation.alternatives[this.resultados.indexOf(resultado)];
 
 			},
 			calculateByLaplace() {
+				if(!this.verifyAllTheFields()){
+					this.notAllTheValues = true;
+					return;
+				}
 				this.parser();
+				this.notAllTheValues = false;
 				this.resultados = [];
 				this.decision = '';
 				//Average of each column
@@ -310,7 +322,12 @@
 				this.decision = this.situation.alternatives[this.resultados.indexOf(resultado)];
 			},
 			calculateBySavage() {
+				if(!this.verifyAllTheFields()){
+					this.notAllTheValues = true;
+					return;
+				}
 				this.parser();
+				this.notAllTheValues = false;
 				this.resultados = [];
 				this.decision = '';
 				//It generates a new table with values substracted
@@ -350,6 +367,19 @@
 				this.postura = "Savage";
 				this.calcular = true;
 				this.decision = this.situation.alternatives[this.resultados.indexOf(resultado)];
+			},
+			openHurwicz(){
+				this.alphaAssign = true;
+			},
+			verifyAllTheFields(){
+				for (let i=0;i<this.situation.alternatives.length;i++){
+            		for(let j=0;j<this.situation.scenarios.length;j++){
+            			if(this.fields[i][j] === undefined){
+            				return false;
+            			}
+            		}
+            	}
+            	return true;
 			},
 			parser(){
 				for(let i=0; i<this.situation.alternatives.length;i++){
