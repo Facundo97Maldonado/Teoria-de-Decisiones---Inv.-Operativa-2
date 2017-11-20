@@ -16491,7 +16491,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
-//
 
 exports.default = {
 	name: 'fdOneSituation',
@@ -16512,20 +16511,6 @@ exports.default = {
 	computed: {
 		Id: function Id() {
 			return this.$route.params.id;
-<<<<<<< HEAD
-		},
-		unsettedValues: function unsettedValues() {
-			return 3; /*
-             for (let i=0;i<this.situation.alternatives.length;i++){
-             for(let j=0;j<this.situation.scenarios.length;j++){
-             if(this.fields[i][j] === undefined){
-             return undefined;
-             }
-             }
-             }
-             return true;*/
-=======
->>>>>>> 6844b38ebd75926afcc9b49379e926169db9edec
 		}
 	},
 	methods: {
@@ -16878,9 +16863,7 @@ var render = function() {
           _c("div", { staticClass: "col-md-12" }, [
             _vm.notAllTheValues
               ? _c("h1", { staticClass: "options" }, [
-                  _vm._v(
-                    "INGRESE TODOS LOS VALORES \n\t\t\t\t\tANTES DE ELEGIR LA POSTURA"
-                  )
+                  _vm._v("INGRESE TODOS LOS VALORES ANTES DE ELEGIR LA POSTURA")
                 ])
               : _vm._e()
           ])
