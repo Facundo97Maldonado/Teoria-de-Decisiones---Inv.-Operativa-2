@@ -16491,6 +16491,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
 
 exports.default = {
 	name: 'fdOneSituation',
@@ -16503,13 +16504,15 @@ exports.default = {
 			calcular: false,
 			resultados: [],
 			decision: '',
-			postura: ''
+			postura: '',
+			notAllTheValues: false
 		};
 	},
 
 	computed: {
 		Id: function Id() {
 			return this.$route.params.id;
+<<<<<<< HEAD
 		},
 		unsettedValues: function unsettedValues() {
 			return 3; /*
@@ -16521,11 +16524,18 @@ exports.default = {
              }
              }
              return true;*/
+=======
+>>>>>>> 6844b38ebd75926afcc9b49379e926169db9edec
 		}
 	},
 	methods: {
 		calculateByOptimist: function calculateByOptimist() {
+			if (!this.verifyAllTheFields()) {
+				this.notAllTheValues = true;
+				return;
+			}
 			this.parser();
+			this.notAllTheValues = false;
 			this.resultados = [];
 			this.decision = '';
 			//Searchs the bigger value of each column
@@ -16550,7 +16560,12 @@ exports.default = {
 			this.decision = this.situation.alternatives[this.resultados.indexOf(resultado)];
 		},
 		calculateByPesimist: function calculateByPesimist() {
+			if (!this.verifyAllTheFields()) {
+				this.notAllTheValues = true;
+				return;
+			}
 			this.parser();
+			this.notAllTheValues = false;
 			this.resultados = [];
 			this.decision = '';
 			//Searchs the lover value of each column
@@ -16575,7 +16590,13 @@ exports.default = {
 			this.decision = this.situation.alternatives[this.resultados.indexOf(resultado)];
 		},
 		calculateByHurwicz: function calculateByHurwicz() {
+			if (!this.verifyAllTheFields()) {
+				this.notAllTheValues = true;
+				this.alphaAssign = false;
+				return;
+			}
 			this.parser();
+			this.notAllTheValues = false;
 			this.resultados = [];
 			this.decision = '';
 			for (var i = 0; i < this.situation.alternatives.length; i++) {
@@ -16604,12 +16625,18 @@ exports.default = {
 					resultado = this.resultados[_i3];
 				}
 			}
+			this.alphaAssign = false;
 			this.postura = "Hurwicz con alpha:" + this.alpha / 10;
 			this.calcular = true;
 			this.decision = this.situation.alternatives[this.resultados.indexOf(resultado)];
 		},
 		calculateByLaplace: function calculateByLaplace() {
+			if (!this.verifyAllTheFields()) {
+				this.notAllTheValues = true;
+				return;
+			}
 			this.parser();
+			this.notAllTheValues = false;
 			this.resultados = [];
 			this.decision = '';
 			//Average of each column
@@ -16639,7 +16666,12 @@ exports.default = {
 			this.decision = this.situation.alternatives[this.resultados.indexOf(resultado)];
 		},
 		calculateBySavage: function calculateBySavage() {
+			if (!this.verifyAllTheFields()) {
+				this.notAllTheValues = true;
+				return;
+			}
 			this.parser();
+			this.notAllTheValues = false;
 			this.resultados = [];
 			this.decision = '';
 			//It generates a new table with values substracted
@@ -16679,6 +16711,19 @@ exports.default = {
 			this.postura = "Savage";
 			this.calcular = true;
 			this.decision = this.situation.alternatives[this.resultados.indexOf(resultado)];
+		},
+		openHurwicz: function openHurwicz() {
+			this.alphaAssign = true;
+		},
+		verifyAllTheFields: function verifyAllTheFields() {
+			for (var i = 0; i < this.situation.alternatives.length; i++) {
+				for (var j = 0; j < this.situation.scenarios.length; j++) {
+					if (this.fields[i][j] === undefined) {
+						return false;
+					}
+				}
+			}
+			return true;
 		},
 		parser: function parser() {
 			for (var i = 0; i < this.situation.alternatives.length; i++) {
@@ -16829,6 +16874,18 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _vm.notAllTheValues
+              ? _c("h1", { staticClass: "options" }, [
+                  _vm._v(
+                    "INGRESE TODOS LOS VALORES \n\t\t\t\t\tANTES DE ELEGIR LA POSTURA"
+                  )
+                ])
+              : _vm._e()
+          ])
+        ]),
+        _vm._v(" "),
         _vm._m(1),
         _vm._v(" "),
         _c("div", { staticClass: "row selectAnOption" }, [
@@ -16839,7 +16896,6 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-success btn-lg btn-block",
-                    attrs: { disabled: !_vm.unsettedValues },
                     on: {
                       click: function($event) {
                         _vm.calculateByOptimist()
@@ -16859,7 +16915,6 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-danger btn-lg btn-block",
-                    attrs: { disabled: !_vm.unsettedValues },
                     on: {
                       click: function($event) {
                         _vm.calculateByPesimist()
@@ -16879,11 +16934,7 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-warning btn-lg btn-block",
-                    attrs: {
-                      disabled: !_vm.unsettedValues,
-                      onclick:
-                        "document.getElementById('forHurwicz').style.display='block';"
-                    }
+                    on: { click: _vm.openHurwicz }
                   },
                   [_vm._v("\n\t\t\t\t\t\t\t\tHurwicz\n\t\t\t\t\t\t\t")]
                 )
@@ -16898,7 +16949,6 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-info btn-lg btn-block",
-                    attrs: { disabled: !_vm.unsettedValues },
                     on: {
                       click: function($event) {
                         _vm.calculateByLaplace()
@@ -16918,7 +16968,6 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-primary btn-lg btn-block",
-                    attrs: { disabled: !_vm.unsettedValues },
                     on: {
                       click: function($event) {
                         _vm.calculateBySavage()
@@ -16979,9 +17028,6 @@ var render = function() {
                     {
                       staticClass: "btn btn-warning btn-sm btnAssignAlpha",
                       staticStyle: {},
-                      attrs: {
-                        onclick: "this.parentElement.style.display='none';"
-                      },
                       on: {
                         click: function($event) {
                           _vm.calculateByHurwicz()
